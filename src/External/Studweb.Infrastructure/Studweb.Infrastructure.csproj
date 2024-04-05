@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\Studweb.Application\Studweb.Application.csproj" />
+      <ProjectReference Include="..\..\Core\Studweb.Domain\Studweb.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -18,4 +18,10 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\Studweb.Application\Studweb.Application.csproj" />
+      <ProjectReference Include="..\..\Core\Studweb.Domain\Studweb.Domain.csproj" />
+      <ProjectReference Include="..\..\External\Studweb.Infrastructure\Studweb.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
