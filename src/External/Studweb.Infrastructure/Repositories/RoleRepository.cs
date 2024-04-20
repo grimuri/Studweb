@@ -48,4 +48,10 @@ public class RoleRepository : IRoleRepository
         
         return id;
     }
+
+    public async Task EditAsync(int id, string name, CancellationToken cancellationToken = default)
+    {
+        var role = _roles.FirstOrDefault(x => x.Id == id);
+        role.Name = name;
+    }
 }
