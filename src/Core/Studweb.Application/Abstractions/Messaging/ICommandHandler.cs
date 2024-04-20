@@ -1,16 +1,16 @@
-﻿using MediatR;
-using Studweb.Application.Common;
+﻿using ErrorOr;
+using MediatR;
 
 namespace Studweb.Application.Abstractions.Messaging;
 
-public interface ICommandHandler<TCommand> : IRequestHandler<TCommand, Result>
+public interface ICommandHandler<TCommand> : IRequestHandler<TCommand, ErrorOr<Unit>>
     where TCommand : ICommand
 {
-    Task<Result> Handle(TCommand command, CancellationToken cancellationToken);
+    //Task<ErrorOr<Unit>> Handle(TCommand command, CancellationToken cancellationToken);
 }
 
-public interface ICommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, Result<TResponse>>
+public interface ICommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, ErrorOr<TResponse>>
     where TCommand : ICommand<TResponse>
 {
-    Task<Result<TResponse>> Handle(TCommand command, CancellationToken cancellationToken);
+    //Task<ErrorOr<TResponse>> Handle(TCommand command, CancellationToken cancellationToken);
 }

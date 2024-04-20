@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using Studweb.Application.Abstractions.Messaging;
-using Studweb.Application.Common;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Entities;
 
@@ -14,12 +14,11 @@ public class GetRolesQueryHandler : IQueryHandler<GetRolesQuery, IEnumerable<Rol
     {
         _roleRepository = roleRepository;
     }
-    
-    public async Task<Result<IEnumerable<Role>>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
+
+    public async Task<ErrorOr<IEnumerable<Role>>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
     {
         var roles = await _roleRepository.GetAllAsync();
 
-        //return Result.Success<IEnumerable<Role>>(roles);
-        return Result<IEnumerable<Role>>.Success(roles);
+        return roles.ToList();
     }
 }

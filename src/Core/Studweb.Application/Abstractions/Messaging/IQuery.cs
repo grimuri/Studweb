@@ -1,9 +1,9 @@
-﻿using MediatR;
-using Studweb.Application.Common;
+﻿using ErrorOr;
+using MediatR;
 
 namespace Studweb.Application.Abstractions.Messaging;
 
-public interface IQuery<TResponse> : IRequest<Result<TResponse>>
+public interface IQuery<TResponse> : IRequest<ErrorOr<TResponse>>
 {
     
 }

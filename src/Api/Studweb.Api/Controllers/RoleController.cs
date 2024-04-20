@@ -19,8 +19,16 @@ public class RoleController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var roles = await _sender.Send(new GetRolesQuery());
-        return Ok(roles.Response);
+        var response = await _sender.Send(new GetRolesQuery());
+        return response.Match(
+            result => Ok(result),
+            errors => Problem(errors.ToString()));
     }
+
+    // [HttpGet("{id}")]
+    // public async Task<IActionResult> GetById([FromRoute] int id)
+    // {
+    //     var response = await _sender.Send(new)
+    // }
     
 }

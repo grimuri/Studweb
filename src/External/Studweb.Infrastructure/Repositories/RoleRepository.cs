@@ -9,15 +9,23 @@ public class RoleRepository : IRoleRepository
     {
         new()
         {
+            Id = 0,
             Name = "Admin",
         },
         new()
         {
+            Id = 1,
             Name = "Moderator",
         }
     };
     public async Task<IEnumerable<Role>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return _roles;
+    }
+
+    public async Task<Role> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var role = _roles.FirstOrDefault(x => x.Id == id);
+        return role;
     }
 }

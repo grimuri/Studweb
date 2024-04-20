@@ -1,14 +1,14 @@
-﻿using MediatR;
-using Studweb.Application.Common;
+﻿using ErrorOr;
+using MediatR;
 
 namespace Studweb.Application.Abstractions.Messaging;
 
-public interface ICommand : IRequest<Result>
+public interface ICommand : IRequest<ErrorOr<Unit>>
 {
     
 }
 
-public interface ICommand<TResponse> : IRequest<Result<TResponse>>
+public interface ICommand<TResponse> : IRequest<ErrorOr<TResponse>>
 {
     
 }
