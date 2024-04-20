@@ -1,0 +1,6 @@
+﻿using Studweb.Application.Abstractions.Messaging;
+using Studweb.Domain.Entities;
+
+namespace Studweb.Application.Features.Roles.Queries.GetRoles;
+
+public sealed record GetRolesQuery : IQuery<IEnumerable<Role>>;

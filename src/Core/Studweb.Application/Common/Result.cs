@@ -1,53 +1,47 @@
-﻿namespace Studweb.Application.Common;
-
-public class Result
+﻿namespace Studweb.Application.Common
 {
-    private Result(bool isSuccess, Error error)
+    public class Result<T>
     {
-        if (isSuccess && error != Error.None
-            || !isSuccess && error == Error.None)
+        private Result(bool isSuccess, T response, Error error)
         {
-            throw new ArgumentException("Invalid error");
+            if (isSuccess && error != Error.None || !isSuccess && error == Error.None)
+            {
+                throw new ArgumentException("Invalid error");
+            }
+
+            IsSuccess = isSuccess;
+            Response = response;
+            Error = error;
         }
-        IsSuccess = isSuccess;
-        Error = error;
+
+        public bool IsSuccess { get; }
+        public bool IsFailure => !IsSuccess;
+        public Error Error { get; }
+        public T? Response { get; }
+
+        public static Result<T> Success(T response) => new Result<T>(true, response, Error.None);
+        public static Result<T> Failure(Error error) => new Result<T>(false, default, error);
+        
     }
-    public bool IsSuccess { get; }
-    public bool IsFailure => !IsSuccess;
-    public Error Error { get; }
 
-    public static Result Success() => new(true, Error.None);
-    public static Result Failure(Error error) => new(false, error);
-}
-
-public class Result<T>
-{
-    private Result(bool isSuccess, Error error)
+    public class Result
     {
-        if (isSuccess && error != Error.None
-            || !isSuccess && error == Error.None)
+        private Result(bool isSuccess, Error error)
         {
-            throw new ArgumentException("Invalid error");
-        }
-        IsSuccess = isSuccess;
-        Error = error;
-    }
-    
-    private Result(bool isSuccess, T response)
-    {
-        if (isSuccess && response == null
-            || !isSuccess && response != null)
-        {
-            throw new ArgumentException("Invalid error");
-        }
-        IsSuccess = isSuccess;
-        Response = response;
-    }
-    public bool IsSuccess { get; }
-    public bool IsFailure => !IsSuccess;
-    public Error Error { get; }
-    public T Response { get; }
+            if (isSuccess && error != Error.None || !isSuccess && error == Error.None)
+            {
+                throw new ArgumentException("Invalid error");
+            }
 
-    public static Result<T> Success(T response) => new(true, response);
-    public static Result<T> Failure(Error error) => new(false, error);
+            IsSuccess = isSuccess;
+            Error = error;
+        }
+
+        public bool IsSuccess { get; }
+        public bool IsFailure => !IsSuccess;
+        public Error Error { get; }
+
+        public static Result Success() => new Result(true, Error.None);
+        public static Result Failure(Error error) => new Result(false, error);
+    }
 }
