@@ -3,4 +3,4 @@ using Studweb.Domain.Entities;
 
 namespace Studweb.Application.Features.Roles.Queries.GetRoleById;
 
-public record GetRoleByIdQuery() : IQuery<Role>;
+public record GetRoleByIdQuery(int Id) : IQuery<Role>;

@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Studweb.Api.Common;
 using Studweb.Application;
 using Studweb.Infrastructure;
 
@@ -12,22 +15,25 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services
         .AddApplication()
-        .AddInfrastructure(builder.Configuration);
+        .AddInfrastructure(builder.Configuration)
+        .AddSingleton<ProblemDetailsFactory, StudwebProblemDetailsFactory>();
 }
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+    
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
