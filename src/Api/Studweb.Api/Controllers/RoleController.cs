@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Studweb.Application.Features.Roles.Commands.AddRoleCommand;
 using Studweb.Application.Features.Roles.Queries.GetRoleById;
 using Studweb.Application.Features.Roles.Queries.GetRoles;
 using Studweb.Domain.Entities;
@@ -29,6 +30,16 @@ public class RoleController : ApiController
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         var response = await _sender.Send(new GetRoleByIdQuery(id));
+
+        return response.Match(
+            result => Ok(result),
+            errors => Problem(errors));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add([FromBody] string name)
+    {
+        var response = await _sender.Send(new AddRoleCommand(name));
 
         return response.Match(
             result => Ok(result),

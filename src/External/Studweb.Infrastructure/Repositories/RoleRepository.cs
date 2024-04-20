@@ -23,9 +23,29 @@ public class RoleRepository : IRoleRepository
         return _roles;
     }
 
-    public async Task<Role> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Role?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         var role = _roles.FirstOrDefault(x => x.Id == id);
         return role;
+    }
+
+    public async Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken = default)
+    {
+        var role = _roles.FirstOrDefault(x => x.Name == name);
+        return role;
+    }
+
+    public async Task<int> AddAsync(Role role, CancellationToken cancellationToken = default)
+    {
+        var id = _roles.Count();
+        _roles.Add(new Role()
+        {
+            Id = id,
+            Name = role.Name
+        });
+
+        id = _roles.FirstOrDefault(x => x.Name == role.Name).Id;
+        
+        return id;
     }
 }
