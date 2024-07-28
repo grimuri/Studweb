@@ -1,10 +1,14 @@
-﻿using Studweb.Application.Persistance;
+﻿using Dapper;
+using Studweb.Application.Persistance;
 using Studweb.Domain.Entities;
+using Studweb.Infrastructure.Utils;
 
 namespace Studweb.Infrastructure.Repositories;
 
 public class RoleRepository : IRoleRepository
 {
+    private readonly SqlConnectionFactory _sqlConnectionFactory;
+    
     private List<Role> _roles = new List<Role>()
     {
         new()
@@ -18,9 +22,20 @@ public class RoleRepository : IRoleRepository
             Name = "Moderator",
         }
     };
+
+    public RoleRepository(SqlConnectionFactory sqlConnectionFactory)
+    {
+        _sqlConnectionFactory = sqlConnectionFactory;
+    }
+
     public async Task<IEnumerable<Role>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return _roles;
+        using var connection = _sqlConnectionFactory.Create();
+        
+        const string sql = "SELECT Id, Name FROM Roles";
+
+        var roles = await connection.QueryAsync<Role>(sql);
+        return roles;
     }
 
     public async Task<Role?> GetByIdAsync(int id, CancellationToken cancellationToken = default)

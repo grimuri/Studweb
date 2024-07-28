@@ -1,3 +1,9 @@
+-- Creating Database StudwebDB
+
+CREATE DATABASE StudwebDB;
+
+USE StudwebDB;
+
 -- Creating Table Roles
 Create TABLE Roles (
                        Id integer  NOT NULL primary key,
