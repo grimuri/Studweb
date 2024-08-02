@@ -38,9 +38,14 @@ public class RoleRepository : IRoleRepository
         return roles;
     }
 
-    public async Task<Role?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Role?> GetByIdAsync(int roleId, CancellationToken cancellationToken = default)
     {
-        var role = _roles.FirstOrDefault(x => x.Id == id);
+        using var connection = _sqlConnectionFactory.Create();
+
+        const string sql = @"SELECT Id, Name FROM Roles WHERE Id = @id";
+
+        var role = await connection.QueryFirstOrDefaultAsync<Role>(sql, new { id = roleId });
+        
         return role;
     }
 
