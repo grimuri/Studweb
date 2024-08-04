@@ -6,7 +6,7 @@ USE StudwebDB;
 
 -- Creating Table Roles
 Create TABLE Roles (
-                       Id integer  NOT NULL primary key,
+                       Id integer  NOT NULL IDENTITY primary key,
                        Name varchar(100) NOT NULL unique
 );
 

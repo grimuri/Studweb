@@ -8,20 +8,6 @@ namespace Studweb.Infrastructure.Repositories;
 public class RoleRepository : IRoleRepository
 {
     private readonly SqlConnectionFactory _sqlConnectionFactory;
-    
-    private List<Role> _roles = new List<Role>()
-    {
-        new()
-        {
-            Id = 0,
-            Name = "Admin",
-        },
-        new()
-        {
-            Id = 1,
-            Name = "Moderator",
-        }
-    };
 
     public RoleRepository(SqlConnectionFactory sqlConnectionFactory)
     {
@@ -35,6 +21,7 @@ public class RoleRepository : IRoleRepository
         const string sql = "SELECT Id, Name FROM Roles";
 
         var roles = await connection.QueryAsync<Role>(sql);
+        
         return roles;
     }
 
@@ -42,36 +29,49 @@ public class RoleRepository : IRoleRepository
     {
         using var connection = _sqlConnectionFactory.Create();
 
-        const string sql = @"SELECT Id, Name FROM Roles WHERE Id = @id";
+        const string sql = @"SELECT Id, Name FROM Roles WHERE Id = @Id";
 
-        var role = await connection.QueryFirstOrDefaultAsync<Role>(sql, new { id = roleId });
+        var role = await connection.QueryFirstOrDefaultAsync<Role>(sql, new { Id = roleId });
         
         return role;
     }
 
-    public async Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken = default)
+    public async Task<Role?> GetByNameAsync(string roleName, CancellationToken cancellationToken = default)
     {
-        var role = _roles.FirstOrDefault(x => x.Name == name);
+        using var connection = _sqlConnectionFactory.Create();
+
+        const string sql = @"SELECT Id, Name FROM Roles WHERE Name = @Name";
+
+        var role = await connection.QueryFirstOrDefaultAsync<Role>(sql, new { Name = roleName });
+        
         return role;
     }
 
     public async Task<int> AddAsync(Role role, CancellationToken cancellationToken = default)
     {
-        var id = _roles.Count();
-        _roles.Add(new Role()
-        {
-            Id = id,
-            Name = role.Name
-        });
+        using var connection = _sqlConnectionFactory.Create();
 
-        id = _roles.FirstOrDefault(x => x.Name == role.Name).Id;
-        
+        const string sql = @"INSERT INTO Roles (Name) OUTPUT Inserted.Id VALUES (@Name)";
+
+        var id = await connection.ExecuteScalarAsync<int>(sql, new { Name = role.Name });
+
         return id;
     }
 
-    public async Task EditAsync(int id, string name, CancellationToken cancellationToken = default)
+    public async Task<Role> EditAsync(int id, string name, CancellationToken cancellationToken = default)
     {
-        var role = _roles.FirstOrDefault(x => x.Id == id);
-        role.Name = name;
+        using var connection = _sqlConnectionFactory.Create();
+
+        const string sql = @"
+                            UPDATE Roles 
+                            SET Name = @Name 
+                            WHERE Id = @Id;
+                            SELECT Id, Name
+                            FROM Roles
+                            WHERE Id = @Id";
+
+        var role = await connection.QueryFirstOrDefaultAsync<Role>(sql, new { Id = id, Name = name });
+
+        return role;
     }
 }

@@ -3,10 +3,11 @@ using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Contracts.Role;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Common.Errors;
+using Studweb.Domain.Entities;
 
 namespace Studweb.Application.Features.Roles.Commands.EditRole;
 
-public class EditRoleCommandHandler : ICommandHandler<EditRoleCommand, EditRoleResponse>
+public class EditRoleCommandHandler : ICommandHandler<EditRoleCommand, Role>
 {
     private readonly IRoleRepository _roleRepository;
 
@@ -15,7 +16,7 @@ public class EditRoleCommandHandler : ICommandHandler<EditRoleCommand, EditRoleR
         _roleRepository = roleRepository;
     }
     
-    public async Task<ErrorOr<EditRoleResponse>> Handle(EditRoleCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Role>> Handle(EditRoleCommand request, CancellationToken cancellationToken)
     {
         var role = await _roleRepository.GetByIdAsync(request.Id);
 
@@ -24,8 +25,8 @@ public class EditRoleCommandHandler : ICommandHandler<EditRoleCommand, EditRoleR
             return Errors.Role.NotFound;
         }
 
-        await _roleRepository.EditAsync(request.Id, request.Name);
+        var editedRole = await _roleRepository.EditAsync(request.Id, request.Name);
 
-        return new EditRoleResponse("Success");
+        return editedRole;
     }
 }
