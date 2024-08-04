@@ -63,15 +63,22 @@ public class RoleRepository : IRoleRepository
         using var connection = _sqlConnectionFactory.Create();
 
         const string sql = @"
-                            UPDATE Roles 
-                            SET Name = @Name 
-                            WHERE Id = @Id;
-                            SELECT Id, Name
-                            FROM Roles
-                            WHERE Id = @Id";
+                            UPDATE Roles SET Name = @Name WHERE Id = @Id;
+                            SELECT Id, Name FROM Roles WHERE Id = @Id";
 
         var role = await connection.QueryFirstOrDefaultAsync<Role>(sql, new { Id = id, Name = name });
 
         return role;
+    }
+
+    public async Task<int> DeleteAsync(int id, CancellationToken cancellationToken = default)
+    {
+        using var connection = _sqlConnectionFactory.Create();
+
+        const string sql = @"DELETE FROM Roles WHERE Id = @Id";
+
+        var affectedRow = await connection.ExecuteAsync(sql, new { Id = id });
+
+        return affectedRow;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Studweb.Application.Features.Roles.Commands.AddRoleCommand;
+using Studweb.Application.Features.Roles.Commands.DeleteRole;
 using Studweb.Application.Features.Roles.Commands.EditRole;
 using Studweb.Application.Features.Roles.Queries.GetRoleById;
 using Studweb.Application.Features.Roles.Queries.GetRoles;
@@ -55,5 +56,16 @@ public class RoleController : ApiController
         return response.Match(
             result => Ok(result),
             errors => Problem(errors));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var response = await _sender.Send(new DeleteRoleCommand(id));
+
+        return response.Match(
+            result => Ok(result),
+            errors => Problem(errors));
+
     }
 }
