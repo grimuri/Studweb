@@ -29,8 +29,8 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
 
         var user = new User()
         {
-            Name = request.Name,
-            Surname = request.Surname,
+            FirstName =  request.FirstName,
+            LastName = request.Lastname,
             Birthday = request.Birthday,
             Email = request.Email,
             Password = PasswordHasher.HashPassword(request.Password),

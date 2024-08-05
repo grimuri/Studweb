@@ -4,8 +4,8 @@ using Studweb.Application.Contracts.Authentication;
 namespace Studweb.Application.Features.Users.Commands;
 
 public record RegisterUserCommand(
-    string Name,
-    string Surname,
+    string FirstName,
+    string Lastname,
     string Email,
     string Password,
     string ConfirmPassword,

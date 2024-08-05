@@ -37,18 +37,18 @@ public class UserRepository : IUserRepository
         var role = await _roleRepository.GetByNameAsync(user.Role.Name);
         var roleId = role.Id;
 
-        const string sql = @"INSERT INTO Users (Name, Surname, Email, Password, Birthday, CreatedAt, VerifiedAt,
+        const string sql = @"INSERT INTO Users (FirstName, LastName, Email, Password, Birthday, CreatedAt, VerifiedAt,
                                 VerificationToken, VerificationTokenExpires, ResetPasswordToken,
                                 ResetPasswordTokenExpires, BanTime, RoleId) 
                             OUTPUT Inserted.Id
-                            VALUES (@Name, @Surname, @Email, @Password, @Birthday, @CreatedAt, @VerifiedAt,
+                            VALUES (@FirstName, @LastName, @Email, @Password, @Birthday, @CreatedAt, @VerifiedAt,
                                 @VerificationToken, @VerificationTokenExpires, @ResetPasswordToken,
                                 @ResetPasswordTokenExpires, @BanTime, @RoleId)";
 
         var id = await connection.ExecuteScalarAsync<int>(sql, new
         {
-            Name = user.Name,
-            Surname = user.Surname,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
             Email = user.Email,
             Password = user.Password,
             Birthday = user.Birthday,
