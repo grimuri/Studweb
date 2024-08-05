@@ -12,6 +12,6 @@ public static partial class Errors
 
         public static Error DuplicateName = Error.Conflict(
             code: "Role.DuplicateName",
-            description: "This role already exist");
+            description: "This role already exists");
     }
 }

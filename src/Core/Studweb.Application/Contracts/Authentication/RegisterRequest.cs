@@ -5,5 +5,6 @@ public record RegisterRequest(
     string Surname,
     string Email,
     string Password,
-    string ConfirmPassword
+    string ConfirmPassword,
+    DateTime? Birthday
     );
