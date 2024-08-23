@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Studweb.Api.Common;
+using Studweb.Api.Endpoints;
 using Studweb.Application;
 using Studweb.Infrastructure;
 
@@ -27,6 +28,8 @@ var app = builder.Build();
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+    
+    app.AddAuthenticationEndpoints();
     
     app.UseHttpsRedirection();
 
