@@ -27,20 +27,31 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
             return Errors.User.DuplicateEmail;
         }
 
-        var user = new User()
-        {
-            FirstName =  request.FirstName,
-            LastName = request.Lastname,
-            Birthday = request.Birthday,
-            Email = request.Email,
-            Password = PasswordHasher.HashPassword(request.Password),
-            VerificationToken = RandomNumberGenerator.GetBytes(64).ToString(),
-            VerificationTokenExpires = DateTime.Now.AddDays(3),
-            Role = new Role()
+        var user = User.Create(
+            request.FirstName,
+            request.Lastname,
+            request.Email,
+            PasswordHasher.HashPassword(request.Password),
+            request.Birthday,
+            new Role()
             {
-                Name = "User"
+                Name = "User",
             }
-        };
+            );
+        // var users = new User()
+        // {
+        //     FirstName =  request.FirstName,
+        //     LastName = request.Lastname,
+        //     Birthday = request.Birthday,
+        //     Email = request.Email,
+        //     Password = PasswordHasher.HashPassword(request.Password),
+        //     VerificationToken = RandomNumberGenerator.GetBytes(64).ToString(),
+        //     VerificationTokenExpires = DateTime.Now.AddDays(3),
+        //     Role = new Role()
+        //     {
+        //         Name = "User"
+        //     }
+        // };
 
         var id = await _userRepository.RegisterAsync(user);
 
