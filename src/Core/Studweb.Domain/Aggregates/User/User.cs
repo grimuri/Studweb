@@ -1,10 +1,12 @@
 ﻿using System.Security.Cryptography;
+using Newtonsoft.Json;
+using Studweb.Domain.DomainEvents;
 using Studweb.Domain.Entities.ValueObjects;
 using Studweb.Domain.Primitives;
 
 namespace Studweb.Domain.Entities;
 
-public class User : AggregateRoot<UserId>
+public sealed class User : AggregateRoot<int>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -21,7 +23,8 @@ public class User : AggregateRoot<UserId>
 
     public Role Role { get; set; }
 
-    private User(UserId id, string firstName, string lastName, string email, string password, DateTime? birthday, Role role) : base(id)
+    [JsonConstructor]
+    private User(int id, string firstName, string lastName, string email, string password, DateTime? birthday, Role role) : base(id)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -43,14 +46,18 @@ public class User : AggregateRoot<UserId>
         Role role
     )
     {
-        return new(
-            UserId.Create(-1),
+        var user = new User(
+            -1,
             firstName,
             lastName,
             email,
             password,
             birthday,
             role);
+        
+        user.RaiseDomainEvent(new UserRegistered(user));
+
+        return user;
     }
 }
 

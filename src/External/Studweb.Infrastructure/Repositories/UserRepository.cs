@@ -1,41 +1,51 @@
 ﻿using Dapper;
 using ErrorOr;
+using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Studweb.Application.Contracts.Authentication;
 using Studweb.Application.Features.Users.Commands;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Entities;
+using Studweb.Domain.Primitives;
+using Studweb.Infrastructure.Outbox;
 using Studweb.Infrastructure.Utils;
 
 namespace Studweb.Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly SqlConnectionFactory _sqlConnectionFactory;
+    private readonly DbContext _dbContext;
     private readonly IRoleRepository _roleRepository;
+    private readonly IOutboxMessageRepository _outboxMessageRepository;
 
-    public UserRepository(SqlConnectionFactory sqlConnectionFactory, IRoleRepository roleRepository)
+    public UserRepository(DbContext dbContext, IRoleRepository roleRepository, IOutboxMessageRepository outboxMessageRepository)
     {
-        _sqlConnectionFactory = sqlConnectionFactory;
+        _dbContext = dbContext;
         _roleRepository = roleRepository;
+        _outboxMessageRepository = outboxMessageRepository;
     }
 
-    public async Task<bool> AnyAsync(string email, CancellationToken cancellationToken = default)
+    public async Task<int> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var connection = _dbContext.Connection;
 
-        const string sql = @"SELECT COUNT(Id) FROM Users WHERE Email = @Email";
+        const string sql = @"SELECT Id FROM Users WHERE Email = @Email";
 
-        var isExist = await connection.ExecuteScalarAsync<int>(sql, new { Email = email });
+        var id = await connection.ExecuteScalarAsync<int>(sql, new { Email = email });
 
-        return Convert.ToBoolean(isExist);
+        return id;
     }
 
-    public async Task<int> RegisterAsync(User user, CancellationToken cancellationToken = default)
+    public async Task RegisterAsync(User user, CancellationToken cancellationToken = default)
     {
-        using var connection = _sqlConnectionFactory.Create();
-
-        var role = await _roleRepository.GetByNameAsync(user.Role.Name);
-        var roleId = role.Id;
+        var connection = _dbContext.Connection;
+        var transaction = _dbContext.Transaction;
+        
+        
+        var role = await _roleRepository.GetByNameAsync(user.Role.Name) 
+                   ?? throw new ApplicationException("Role with that name doesn't exist");
+        var roleId = role?.Id.Value;
 
         const string sql = @"INSERT INTO Users (FirstName, LastName, Email, Password, Birthday, CreatedAt, VerifiedAt,
                                 VerificationToken, VerificationTokenExpires, ResetPasswordToken,
@@ -45,7 +55,7 @@ public class UserRepository : IUserRepository
                                 @VerificationToken, @VerificationTokenExpires, @ResetPasswordToken,
                                 @ResetPasswordTokenExpires, @BanTime, @RoleId)";
 
-        var id = await connection.ExecuteScalarAsync<int>(sql, new
+        var parameters = new
         {
             FirstName = user.FirstName,
             LastName = user.LastName,
@@ -60,8 +70,19 @@ public class UserRepository : IUserRepository
             ResetPasswordTokenExpires = user.ResetPasswordTokenExpires,
             BanTime = user.BanTime,
             RoleId = roleId
-        });
+        };
+        
+        await connection.ExecuteScalarAsync(sql, parameters, transaction);
 
-        return id;
+        if (!user.DomainEvents.IsNullOrEmpty())
+        {
+            var domainEvents = user.DomainEvents.ToList();
+            user.ClearDomainEvents();
+            foreach (var domainEvent in domainEvents)
+            {
+                await _outboxMessageRepository.SaveDomainEvents(domainEvent);
+            }
+        }
+        
     }
 }

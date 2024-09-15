@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using Studweb.Application.Persistance;
+using Studweb.Infrastructure.BackgroundJobs;
+using Studweb.Infrastructure.Outbox;
+using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Repositories;
 using Studweb.Infrastructure.Utils;
 
@@ -15,13 +19,36 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddSingleton(serviceProvider =>
         {
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-
-            var connectionString = configuration.GetConnectionString("Default") ??
+            var config = serviceProvider.GetRequiredService<IConfiguration>();
+            var connectionString = config.GetConnectionString("Default") ??
                                    throw new ApplicationException("The connection string is null");
+            
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ApplicationException("The connection string is null or empty");
+            }
 
-            return new SqlConnectionFactory(connectionString);
+            Console.WriteLine($"Connection string: {connectionString}"); // Debugowanie
+            
+            return new DbContext(connectionString);
         });
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
+        services.AddQuartz(config =>
+        {
+            var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
+
+            config
+                .AddJob<ProcessOutboxMessagesJob>(jobKey)
+                .AddTrigger(
+                    trigger =>
+                        trigger.ForJob(jobKey)
+                            .WithSimpleSchedule(
+                                schedule =>
+                                    schedule.WithIntervalInSeconds(10)
+                                        .RepeatForever()));
+        });
+        services.AddQuartzHostedService();
         
         return services;
     }

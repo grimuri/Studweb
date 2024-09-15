@@ -12,17 +12,19 @@ namespace Studweb.Application.Features.Users.Commands;
 public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterResponse>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public RegisterUserCommandHandler(IUserRepository userRepository)
+    public RegisterUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<RegisterResponse>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var isExist = await _userRepository.AnyAsync(request.Email);
-
-        if (isExist)
+        var userId = await _userRepository.GetByEmailAsync(request.Email);
+        
+        if (userId != 0)
         {
             return Errors.User.DuplicateEmail;
         }
@@ -33,28 +35,18 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
             request.Email,
             PasswordHasher.HashPassword(request.Password),
             request.Birthday,
-            new Role()
-            {
-                Name = "User",
-            }
+            Role.Create("User")
             );
-        // var users = new User()
-        // {
-        //     FirstName =  request.FirstName,
-        //     LastName = request.Lastname,
-        //     Birthday = request.Birthday,
-        //     Email = request.Email,
-        //     Password = PasswordHasher.HashPassword(request.Password),
-        //     VerificationToken = RandomNumberGenerator.GetBytes(64).ToString(),
-        //     VerificationTokenExpires = DateTime.Now.AddDays(3),
-        //     Role = new Role()
-        //     {
-        //         Name = "User"
-        //     }
-        // };
+        
+        _unitOfWork.BeginTransaction();
+        
+        await _userRepository.RegisterAsync(user);
+        
+        _unitOfWork.CommitAndCloseConnection();
 
-        var id = await _userRepository.RegisterAsync(user);
-
+        var id = await _userRepository.GetByEmailAsync(user.Email);
+        
+        
         return new RegisterResponse(id, "Successfully registered! Check your email!");
     }
 }

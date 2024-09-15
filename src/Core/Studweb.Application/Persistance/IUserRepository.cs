@@ -6,6 +6,6 @@ namespace Studweb.Application.Persistance;
 
 public interface IUserRepository
 {
-    Task<bool> AnyAsync(string email, CancellationToken cancellationToken = default);
-    Task<int> RegisterAsync(User request, CancellationToken cancellationToken = default);
+    Task<int> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task RegisterAsync(User request, CancellationToken cancellationToken = default);
 }
