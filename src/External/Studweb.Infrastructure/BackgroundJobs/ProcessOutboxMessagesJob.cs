@@ -39,8 +39,8 @@ public class ProcessOutboxMessagesJob : IJob
             }
 
             await _publisher.Publish(domainEvent, context.CancellationToken);
-            
-            
+
+            await _outboxMessageRepository.ProcessDomainEvent(message.Id);
         }
     }
 }

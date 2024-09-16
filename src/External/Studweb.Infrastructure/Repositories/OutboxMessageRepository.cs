@@ -50,4 +50,21 @@ public class OutboxMessageRepository : IOutboxMessageRepository
 
         return result.ToList();
     }
+
+    public async Task ProcessDomainEvent(int id)
+    {
+        var connection = _dbContext.Connection;
+
+        const string sql = @"UPDATE OutboxMessage 
+                            SET ProcessedOnUtc = @DateNow 
+                            WHERE Id = @Id";
+
+        var parameters = new
+        {
+            DateNow = DateTime.UtcNow,
+            Id = id
+        };
+
+        await connection.ExecuteScalarAsync(sql, parameters);
+    }
 }
