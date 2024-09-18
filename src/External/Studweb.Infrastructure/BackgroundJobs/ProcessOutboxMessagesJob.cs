@@ -37,10 +37,12 @@ public class ProcessOutboxMessagesJob : IJob
             {
                 continue;
             }
-
+            
+            await _outboxMessageRepository.ProcessDomainEvent(message.Id);
+            
             await _publisher.Publish(domainEvent, context.CancellationToken);
 
-            await _outboxMessageRepository.ProcessDomainEvent(message.Id);
+            
         }
     }
 }

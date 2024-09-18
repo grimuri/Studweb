@@ -29,6 +29,13 @@ services:
       - 1433:1433
     volumes:
       - msdata:/var/opt/mssql
+        
+  studweb.papercut:
+    image: changemakerstudiosus/papercut-smtp:latest
+    container_name: papercut
+    ports:
+      - 8080:80
+      - 25:25
 
 volumes:
   msdata:

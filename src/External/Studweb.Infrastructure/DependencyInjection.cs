@@ -27,8 +27,6 @@ public static class DependencyInjection
             {
                 throw new ApplicationException("The connection string is null or empty");
             }
-
-            Console.WriteLine($"Connection string: {connectionString}"); // Debugowanie
             
             return new DbContext(connectionString);
         });
