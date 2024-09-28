@@ -14,6 +14,7 @@ public sealed class RoleId : ValueObject
     }
 
     public static RoleId Create(int id) => new RoleId(id);
+    
     public override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

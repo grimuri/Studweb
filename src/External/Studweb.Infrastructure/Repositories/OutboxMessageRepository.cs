@@ -43,10 +43,11 @@ public class OutboxMessageRepository : IOutboxMessageRepository
     public async Task<IEnumerable<OutboxMessage>> GetUnProcessedDomainEvents()
     {
         var connection = _dbContext.Connection;
+        var transaction = _dbContext.Transaction;
 
         const string sql = @"SELECT * FROM OutboxMessage WHERE ProcessedOnUtc IS NULL";
 
-        var result = await connection.QueryAsync<OutboxMessage>(sql);
+        var result = await connection.QueryAsync<OutboxMessage>(sql, transaction: transaction);
 
         return result.ToList();
     }

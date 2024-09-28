@@ -17,6 +17,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITokenRepository, TokenRepository>();
         services.AddSingleton(serviceProvider =>
         {
             var config = serviceProvider.GetRequiredService<IConfiguration>();

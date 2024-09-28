@@ -13,19 +13,26 @@ Create TABLE Roles (
 -- Creating Table User
 Create TABLE Users (
                        Id integer  NOT NULL IDENTITY primary key,
-                       Name varchar(100) NOT NULL,
-                       Surname varchar(100) NOT NULL,
+                       FirstName varchar(100) NOT NULL,
+                       LastName varchar(100) NOT NULL,
                        Email varchar(250) NOT NULL unique,
-                       Password text NOT NULL,
+                       Password varchar(max) NOT NULL,
                        Birthday datetime NULL,
-                       CreatedAt datetime NOT NULL,
-                       VerifiedAt datetime NULL,
-                       VerificationToken text NULL,
-                       VerificationTokenExpires datetime NULL,
-                       ResetPasswordToken text NULL,
-                       ResetPasswordTokenExpires datetime NULL,
+                       CreatedOnUtc datetime NOT NULL,
+                       VerifiedOnUtc datetime NULL,                       
+                       LastModifiedPasswordOnUtc datetime NULL,
                        BanTime datetime NULL,
+                       VerificationTokenId integer NULL FOREIGN KEY REFERENCES Tokens(Id),
+                       ResetPasswordTokenId integer NULL FOREIGN KEY REFERENCES Tokens(Id),
                        RoleId integer NOT NULL FOREIGN KEY REFERENCES Roles(Id),
+);
+
+Create TABLE Tokens (
+                       Id integer NOT NULL IDENTITY primary key,
+                       Value uniqueidentifier NOT NULL unique,
+                       CreatedOnUtc datetime NOT NULL,
+                       ExpiresOnUtc datetime NOT NULL,
+                       Type varchar(max) NOT NULL,
 );
 
 -- Creating Table Outbox_Message

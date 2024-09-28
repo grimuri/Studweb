@@ -7,20 +7,15 @@ namespace Studweb.Infrastructure.Persistance;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly DbContext _dbContext;
-    
     private bool _disposed;
+    private bool _transactionStarted;
 
     public UnitOfWork(DbContext dbContext)
     {
         _dbContext = dbContext;
         _disposed = false;
+        _transactionStarted = false;
     }
-
-    // public void BeginTransaction()
-    // {
-    //     _dbContext.Connection?.Open();
-    //     _dbContext.Transaction = _dbContext.Connection?.BeginTransaction();
-    // }
     
     public void BeginTransaction()
     {
@@ -34,32 +29,65 @@ public class UnitOfWork : IUnitOfWork
             _dbContext.Connection.Open();
         }
 
+        if (_transactionStarted)
+        {
+            throw new InvalidOperationException("A transaction has already been started.");
+        }
+        
         _dbContext.Transaction = _dbContext.Connection.BeginTransaction();
+        _transactionStarted = true;
     }
 
 
     public void Commit()
     {
-        _dbContext.Transaction?.Commit();
-        DisposeTransactionAndSetNull();
+        if (!_transactionStarted)
+        {
+            throw new InvalidOperationException("No transaction has been started to commit.");
+        }
+
+        try
+        {
+            _dbContext.Transaction?.Commit();
+            _transactionStarted = false;
+        }
+        catch (Exception ex)
+        {
+            _dbContext.Transaction?.Rollback();
+            throw new InvalidOperationException("An error occurred during transaction commit. Transaction has been rolled back.", ex);
+        }
+        finally
+        {
+            DisposeTransactionAndSetNull();
+        }
     }
 
     public void CommitAndCloseConnection()
     {
         Commit();
+        
+        if (_dbContext.Connection == null) return;
+        
         _dbContext.Connection?.Close();
         _dbContext.Connection?.Dispose();
     }
 
     public void Rollback()
     {
-        if (_dbContext.Transaction == null)
+        if (!_transactionStarted)
         {
-            throw new InvalidOperationException("No transaction has been started.");
+            throw new InvalidOperationException("No transaction has been started to rollback.");
         }
-        
-        _dbContext.Transaction?.Rollback();
-        DisposeTransactionAndSetNull();
+
+        try
+        {
+            _dbContext.Transaction?.Rollback();
+        }
+        finally
+        {
+            _transactionStarted = false;
+            DisposeTransactionAndSetNull();
+        }
     }
     
     public void Dispose()

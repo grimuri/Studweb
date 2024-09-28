@@ -3,18 +3,17 @@ using Studweb.Domain.Primitives;
 
 namespace Studweb.Domain.Entities.ValueObjects;
 
-
-public sealed class UserId : ValueObject
+public class ResetPasswordTokenId : ValueObject
 {
     public int Value { get; }
 
     [JsonConstructor]
-    private UserId(int value)
+    private ResetPasswordTokenId(int value = default)
     {
         Value = value;
     }
 
-    public static UserId Create(int id) => new UserId(id);
+    public static ResetPasswordTokenId Create() => new ResetPasswordTokenId();
     
     public override IEnumerable<object> GetEqualityComponents()
     {
