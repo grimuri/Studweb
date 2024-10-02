@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Common.Interfaces;
+using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 
 namespace Studweb.Infrastructure.Repositories;

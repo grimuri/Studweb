@@ -29,8 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Core\Studweb.Application\Studweb.Application.csproj" />
-      <ProjectReference Include="..\src\Core\Studweb.Application\Studweb.Application.csproj" />
+      <ProjectReference Include="..\..\src\Core\Studweb.Application\Studweb.Application.csproj" />      
     </ItemGroup>
 
 </Project>

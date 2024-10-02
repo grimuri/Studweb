@@ -2,10 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Studweb.Application.Persistance;
+using Studweb.Application.Utils;
 using Studweb.Infrastructure.BackgroundJobs;
 using Studweb.Infrastructure.Outbox;
 using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Repositories;
+using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 
 namespace Studweb.Infrastructure;
@@ -48,6 +50,7 @@ public static class DependencyInjection
                                         .RepeatForever()));
         });
         services.AddQuartzHostedService();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
         
         return services;
     }

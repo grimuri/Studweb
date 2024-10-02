@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace Studweb.Infrastructure.Utils;
+namespace Studweb.Infrastructure.Utilities;
 
 public class DbContext
 {

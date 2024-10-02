@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Primitives;
 using Studweb.Infrastructure.Outbox;
+using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 
 namespace Studweb.Infrastructure.Repositories;

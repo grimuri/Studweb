@@ -13,11 +13,16 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public RegisterUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public RegisterUserCommandHandler(
+        IUserRepository userRepository, 
+        IUnitOfWork unitOfWork, 
+        IPasswordHasher passwordHasher)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<ErrorOr<RegisterResponse>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -33,7 +38,7 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
             request.FirstName,
             request.Lastname,
             request.Email,
-            PasswordHasher.HashPassword(request.Password),
+            _passwordHasher.Hash(request.Password),
             request.Birthday,
             Role.Create("User")
             );
