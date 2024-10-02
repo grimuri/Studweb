@@ -17,7 +17,7 @@ Create TABLE Users (
                        LastName varchar(100) NOT NULL,
                        Email varchar(250) NOT NULL unique,
                        Password varchar(max) NOT NULL,
-                       Birthday datetime NULL,
+                       Birthday datetime NOT NULL,
                        CreatedOnUtc datetime NOT NULL,
                        VerifiedOnUtc datetime NULL,                       
                        LastModifiedPasswordOnUtc datetime NULL,

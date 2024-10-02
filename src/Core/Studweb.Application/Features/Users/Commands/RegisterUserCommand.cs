@@ -9,4 +9,4 @@ public record RegisterUserCommand(
     string Email,
     string Password,
     string ConfirmPassword,
-    DateTime? Birthday) : ICommand<RegisterResponse>;
+    DateTime Birthday) : ICommand<RegisterResponse>;

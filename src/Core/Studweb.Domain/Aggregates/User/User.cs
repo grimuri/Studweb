@@ -12,7 +12,7 @@ public sealed class User : AggregateRoot<UserId>
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    public DateTime? Birthday { get; set; }
+    public DateTime Birthday { get; set; }
     public DateTime CreatedOnUtc { get; }
     
     // TODO: Function to verify user
@@ -33,7 +33,7 @@ public sealed class User : AggregateRoot<UserId>
         string lastName,
         string email, 
         string password, 
-        DateTime? birthday, 
+        DateTime birthday, 
         Role role
         ) : base(id)
     {
@@ -52,7 +52,7 @@ public sealed class User : AggregateRoot<UserId>
         string lastName,
         string email,
         string password,
-        DateTime? birthday,
+        DateTime birthday,
         Role role
     )
     {

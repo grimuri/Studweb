@@ -25,7 +25,7 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
 
         RuleFor(x => x.Birthday)
             .NotEmpty().WithMessage("Birthday is required")
-            .Must(x => x.Value.AddYears(13).Date <= DateTime.Now.Date)
+            .Must(x => x.AddYears(13).Date <= DateTime.Now.Date)
             .WithMessage("You must be at least 13 years old");
 
     }
