@@ -18,18 +18,44 @@ public class RegisterUserCommandValidatorTests
     {
         // Arrange
 
-        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand() 
-            with { Email = email };
-        
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                Email = email
+            };
+
         // Act
 
         var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
-        
+
         // Assert
 
         result.ShouldHaveValidationErrorFor(x => x.Email);
     }
-    
+
+    [Theory]
+    [InlineData("test.com")]
+    [InlineData("@gmail.com")]
+    [InlineData("test@test@gmail.com")]
+    public void Email_ShouldBeValid(string email)
+    {
+        // Arrange
+
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                Email = email
+            };
+
+        // Act
+
+        var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
+
+        // Assert
+
+        result.ShouldHaveValidationErrorFor(x => x.Email);
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
@@ -38,18 +64,21 @@ public class RegisterUserCommandValidatorTests
     {
         // Arrange
 
-        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand() 
-            with { FirstName = firstName};
-        
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                FirstName = firstName
+            };
+
         // Act
 
         var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
-        
+
         // Assert
 
         result.ShouldHaveValidationErrorFor(x => x.FirstName);
     }
-    
+
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
@@ -58,18 +87,21 @@ public class RegisterUserCommandValidatorTests
     {
         // Arrange
 
-        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand() 
-            with { Lastname = lastName};
-        
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                Lastname = lastName
+            };
+
         // Act
 
         var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
-        
+
         // Assert
 
         result.ShouldHaveValidationErrorFor(x => x.Lastname);
     }
-    
+
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
@@ -78,35 +110,118 @@ public class RegisterUserCommandValidatorTests
     {
         // Arrange
 
-        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand() 
-            with { Password = password};
-        
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                Password = password
+            };
+
         // Act
 
         var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
-        
+
         // Assert
 
         result.ShouldHaveValidationErrorFor(x => x.Password);
     }
-    
+
+    [Theory]
+    [InlineData("a")]
+    [InlineData("aa")]
+    [InlineData("aaa")]
+    [InlineData("aaaa")]
+    [InlineData("aaaaa")]
+    [InlineData("aaaaaa")]
+    [InlineData("aaaaaaa")]
+    public void Password_ShouldNotBeShorterThan8Characters(string password)
+    {
+        // Arrange
+
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                Password = password
+            };
+
+        // Act
+
+        var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
+
+        // Assert
+
+        result.ShouldHaveValidationErrorFor(x => x.Password);
+    }
+
+    [Theory]
+    [InlineData("qwerty123", "qwerty12")]
+    [InlineData("qwerty1234", "qwerty1233")]
+    [InlineData("qwerty123", "qwerty1234")]
+    public void ConfirmPassword_ShouldBeTheSameAsPassword(string confirmPassword, string password)
+    {
+        // Arrange
+
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                Password = password,
+                ConfirmPassword = confirmPassword
+            };
+
+        // Act
+
+        var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
+
+        // Assert
+
+        result.ShouldHaveValidationErrorFor(x => x.ConfirmPassword);
+    }
+
     [Theory]
     [InlineData(null)]
     public void Birthday_ShouldNotBeEmpty(DateTime birthday)
     {
         // Arrange
 
-        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand() 
-            with { Birthday = birthday};
-        
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                Birthday = birthday
+            };
+
         // Act
 
         var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
-        
+
         // Assert
 
         result.ShouldHaveValidationErrorFor(x => x.Birthday);
     }
-    
-    
+
+    [Theory]
+    [MemberData(nameof(Birthdays))]
+    public void Birthday_ShouldIndicateUserIsAtLeast13YearsOld(DateTime birthday)
+    {
+        // Arrange
+
+        var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
+            with
+            {
+                Birthday = birthday
+            };
+
+        // Act
+
+        var result = _registerUserCommandValidator.TestValidate(registerUserCommand);
+
+        // Assert
+
+        result.ShouldHaveValidationErrorFor(x => x.Birthday);
+    }
+
+    public static IEnumerable<object[]> Birthdays => new List<object[]>
+    {
+        new object[] { DateTime.UtcNow },
+        new object[] { DateTime.UtcNow.AddYears(-12) },
+        new object[] { DateTime.UtcNow.AddYears(-5) }
+    };
 }
