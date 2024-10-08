@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Entities;
+using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 using Studweb.Infrastructure.Utils.TempClasses;
@@ -9,9 +10,9 @@ namespace Studweb.Infrastructure.Repositories;
 
 public class RoleRepository : IRoleRepository
 {
-    private readonly DbContext _dbContext;
+    private readonly IDbContext _dbContext;
 
-    public RoleRepository(DbContext dbContext)
+    public RoleRepository(IDbContext dbContext)
     {
         _dbContext = dbContext;
     }

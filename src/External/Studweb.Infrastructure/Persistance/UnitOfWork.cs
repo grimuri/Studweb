@@ -7,11 +7,11 @@ namespace Studweb.Infrastructure.Persistance;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly DbContext _dbContext;
+    private readonly IDbContext _dbContext;
     private bool _disposed;
     private bool _transactionStarted;
 
-    public UnitOfWork(DbContext dbContext)
+    public UnitOfWork(IDbContext dbContext)
     {
         _dbContext = dbContext;
         _disposed = false;
@@ -49,7 +49,7 @@ public class UnitOfWork : IUnitOfWork
 
         try
         {
-            _dbContext.Transaction?.Commit();
+            _dbContext.Transaction.Commit();
             _transactionStarted = false;
         }
         catch (Exception ex)

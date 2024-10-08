@@ -1,9 +1,10 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
+using Studweb.Infrastructure.Persistance;
 
 namespace Studweb.Infrastructure.Utilities;
 
-public class DbContext
+public class DbContext : IDbContext
 {
     private readonly string _connectionString;
     

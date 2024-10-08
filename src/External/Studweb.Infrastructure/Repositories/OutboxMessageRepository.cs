@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Primitives;
 using Studweb.Infrastructure.Outbox;
+using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 
@@ -10,9 +11,9 @@ namespace Studweb.Infrastructure.Repositories;
 
 public class OutboxMessageRepository : IOutboxMessageRepository
 {
-    private readonly DbContext _dbContext;
+    private readonly IDbContext _dbContext;
 
-    public OutboxMessageRepository(DbContext dbContext)
+    public OutboxMessageRepository(IDbContext dbContext)
     {
         _dbContext = dbContext;
     }

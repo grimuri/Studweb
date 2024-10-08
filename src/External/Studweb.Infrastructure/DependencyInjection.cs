@@ -20,7 +20,7 @@ public static class DependencyInjection
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITokenRepository, TokenRepository>();
-        services.AddSingleton(serviceProvider =>
+        services.AddScoped<IDbContext, DbContext>(serviceProvider =>
         {
             var config = serviceProvider.GetRequiredService<IConfiguration>();
             var connectionString = config.GetConnectionString("Default") ??
@@ -51,6 +51,7 @@ public static class DependencyInjection
         });
         services.AddQuartzHostedService();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
+        
         
         return services;
     }

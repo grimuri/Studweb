@@ -4,6 +4,7 @@ using Studweb.Application.Persistance;
 using Studweb.Domain.Entities;
 using Studweb.Domain.Entities.ValueObjects;
 using Studweb.Infrastructure.Outbox;
+using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 
@@ -11,11 +12,11 @@ namespace Studweb.Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly DbContext _dbContext;
+    private readonly IDbContext _dbContext;
     private readonly IOutboxMessageRepository _outboxMessageRepository;
     private readonly IRoleRepository _roleRepository;
 
-    public UserRepository(DbContext dbContext, IRoleRepository roleRepository,
+    public UserRepository(IDbContext dbContext, IRoleRepository roleRepository,
         IOutboxMessageRepository outboxMessageRepository)
     {
         _dbContext = dbContext;
