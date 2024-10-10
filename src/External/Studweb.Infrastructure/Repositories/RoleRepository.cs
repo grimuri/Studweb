@@ -1,22 +1,25 @@
 ﻿using Dapper;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Entities;
+using Studweb.Infrastructure.Persistance;
+using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
+using Studweb.Infrastructure.Utils.TempClasses;
 
 namespace Studweb.Infrastructure.Repositories;
 
 public class RoleRepository : IRoleRepository
 {
-    private readonly SqlConnectionFactory _sqlConnectionFactory;
+    private readonly IDbContext _dbContext;
 
-    public RoleRepository(SqlConnectionFactory sqlConnectionFactory)
+    public RoleRepository(IDbContext dbContext)
     {
-        _sqlConnectionFactory = sqlConnectionFactory;
+        _dbContext = dbContext;
     }
 
     public async Task<IEnumerable<Role>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        using var connection = _dbContext.Create();
         
         const string sql = "SELECT Id, Name FROM Roles";
 
@@ -27,29 +30,33 @@ public class RoleRepository : IRoleRepository
 
     public async Task<Role?> GetByIdAsync(int roleId, CancellationToken cancellationToken = default)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var connection = _dbContext.Create();
 
         const string sql = @"SELECT Id, Name FROM Roles WHERE Id = @Id";
 
-        var role = await connection.QueryFirstOrDefaultAsync<Role>(sql, new { Id = roleId });
+        var result = await connection.QueryFirstOrDefaultAsync<RoleTemp>(sql, new { Id = roleId });
+
+        var role = result?.Convert();
         
         return role;
     }
 
     public async Task<Role?> GetByNameAsync(string roleName, CancellationToken cancellationToken = default)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        var connection = _dbContext.Create();
 
         const string sql = @"SELECT Id, Name FROM Roles WHERE Name = @Name";
 
-        var role = await connection.QueryFirstOrDefaultAsync<Role>(sql, new { Name = roleName });
+        var result = await connection.QueryFirstOrDefaultAsync<RoleTemp>(sql, new { Name = roleName });
+
+        var role = result?.Convert();
         
         return role;
     }
 
     public async Task<int> AddAsync(Role role, CancellationToken cancellationToken = default)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        using var connection = _dbContext.Create();
 
         const string sql = @"INSERT INTO Roles (Name) OUTPUT Inserted.Id VALUES (@Name)";
 
@@ -60,7 +67,7 @@ public class RoleRepository : IRoleRepository
 
     public async Task<Role> EditAsync(int id, string name, CancellationToken cancellationToken = default)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        using var connection = _dbContext.Create();
 
         const string sql = @"
                             UPDATE Roles SET Name = @Name WHERE Id = @Id;
@@ -73,7 +80,7 @@ public class RoleRepository : IRoleRepository
 
     public async Task<int> DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        using var connection = _sqlConnectionFactory.Create();
+        using var connection = _dbContext.Create();
 
         const string sql = @"DELETE FROM Roles WHERE Id = @Id";
 

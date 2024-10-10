@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Studweb.Api.Common;
+using Studweb.Api.Endpoints;
 using Studweb.Application;
 using Studweb.Infrastructure;
 
@@ -14,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddSwaggerGen();
 
     builder.Services
-        .AddApplication()
+        .AddApplication(builder.Configuration)
         .AddInfrastructure(builder.Configuration)
         .AddSingleton<ProblemDetailsFactory, StudwebProblemDetailsFactory>();
 }
@@ -28,6 +29,8 @@ var app = builder.Build();
         app.UseSwaggerUI();
     }
     
+    app.AddAuthenticationEndpoints();
+    
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
@@ -37,3 +40,4 @@ var app = builder.Build();
     app.Run();
 }
 
+public partial class Program { }

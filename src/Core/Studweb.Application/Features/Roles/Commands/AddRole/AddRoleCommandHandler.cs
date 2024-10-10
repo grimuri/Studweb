@@ -25,10 +25,7 @@ public class AddRoleCommandHandler : ICommandHandler<AddRoleCommand, AddRoleResp
             return Errors.Role.DuplicateName;
         }
 
-        var newRole = new Role()
-        {
-            Name = request.Name
-        };
+        var newRole = Role.Create(request.Name);
 
         var response = await _roleRepository.AddAsync(newRole);
 
