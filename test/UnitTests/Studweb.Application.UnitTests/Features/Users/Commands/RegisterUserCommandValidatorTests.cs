@@ -90,7 +90,7 @@ public class RegisterUserCommandValidatorTests
         var registerUserCommand = RegisterUserCommandUtils.RegisterUserCommand()
             with
             {
-                Lastname = lastName
+                LastName = lastName
             };
 
         // Act
@@ -99,7 +99,7 @@ public class RegisterUserCommandValidatorTests
 
         // Assert
 
-        result.ShouldHaveValidationErrorFor(x => x.Lastname);
+        result.ShouldHaveValidationErrorFor(x => x.LastName);
     }
 
     [Theory]

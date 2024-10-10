@@ -2,12 +2,21 @@
 
 CREATE DATABASE StudwebDB;
 
-USE StudwebDB;
+--USE StudwebDB;
 
 -- Creating Table Roles
 Create TABLE Roles (
                        Id integer  NOT NULL IDENTITY primary key,
                        Name varchar(100) NOT NULL unique
+);
+
+-- Creating Table Tokens
+Create TABLE Tokens (
+                        Id integer NOT NULL IDENTITY primary key,
+                        Value uniqueidentifier NOT NULL unique,
+                        CreatedOnUtc datetime NOT NULL,
+                        ExpiresOnUtc datetime NOT NULL,
+                        Type varchar(max) NOT NULL,
 );
 
 -- Creating Table User
@@ -27,14 +36,6 @@ Create TABLE Users (
                        RoleId integer NOT NULL FOREIGN KEY REFERENCES Roles(Id),
 );
 
-Create TABLE Tokens (
-                       Id integer NOT NULL IDENTITY primary key,
-                       Value uniqueidentifier NOT NULL unique,
-                       CreatedOnUtc datetime NOT NULL,
-                       ExpiresOnUtc datetime NOT NULL,
-                       Type varchar(max) NOT NULL,
-);
-
 -- Creating Table Outbox_Message
 Create TABLE OutboxMessage (
                        Id integer NOT NULL IDENTITY primary key,
@@ -46,4 +47,5 @@ Create TABLE OutboxMessage (
 );
 
 -- Insert example data to table Roles
-Insert into Roles values (1, 'Administrator');
+Insert into Roles (Name) values ('Administrator');
+Insert into Roles (Name) values ('User');

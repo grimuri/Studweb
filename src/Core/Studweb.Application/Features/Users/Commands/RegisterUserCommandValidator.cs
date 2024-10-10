@@ -13,7 +13,7 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
         RuleFor(x => x.FirstName)
             .NotEmpty().WithMessage("Name is required");
 
-        RuleFor(x => x.Lastname)
+        RuleFor(x => x.LastName)
             .NotEmpty().WithMessage("LastName is required");
 
         RuleFor(x => x.Password)

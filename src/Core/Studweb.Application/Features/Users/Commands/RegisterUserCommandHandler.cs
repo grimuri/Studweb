@@ -36,7 +36,7 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
 
         var user = User.Create(
             request.FirstName,
-            request.Lastname,
+            request.LastName,
             request.Email,
             _passwordHasher.Hash(request.Password),
             request.Birthday,

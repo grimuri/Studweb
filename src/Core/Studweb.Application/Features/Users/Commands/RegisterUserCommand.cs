@@ -5,7 +5,7 @@ namespace Studweb.Application.Features.Users.Commands;
 
 public record RegisterUserCommand(
     string FirstName,
-    string Lastname,
+    string LastName,
     string Email,
     string Password,
     string ConfirmPassword,

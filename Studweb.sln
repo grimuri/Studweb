@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Studweb.Domain.UnitTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Studweb.Application.UnitTests", "test\UnitTests\Studweb.Application.UnitTests\Studweb.Application.UnitTests.csproj", "{A88DEB95-9B98-4DBC-9D72-5BBAF774A70C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{6692A7B1-ADA6-41DF-B0B8-21A0003A7E59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Studweb.IntegrationTests", "test\IntegrationTests\Studweb.IntegrationTests\Studweb.IntegrationTests.csproj", "{35277AA0-C33A-4721-971A-7213A5B6183E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +50,8 @@ Global
 		{D96BA931-0621-4344-800D-CBC0404D3357} = {84E31667-FD22-4623-90F1-A2B04613D7E6}
 		{BD623B16-F3CD-4E8B-9174-24035DB3C4F6} = {84E31667-FD22-4623-90F1-A2B04613D7E6}
 		{A88DEB95-9B98-4DBC-9D72-5BBAF774A70C} = {84E31667-FD22-4623-90F1-A2B04613D7E6}
+		{6692A7B1-ADA6-41DF-B0B8-21A0003A7E59} = {56A28182-7D1F-4965-BCC9-AF2EF1FF6758}
+		{35277AA0-C33A-4721-971A-7213A5B6183E} = {6692A7B1-ADA6-41DF-B0B8-21A0003A7E59}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EB9ECEA7-055A-4F15-B286-0EEB27936B97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -76,5 +82,9 @@ Global
 		{A88DEB95-9B98-4DBC-9D72-5BBAF774A70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A88DEB95-9B98-4DBC-9D72-5BBAF774A70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A88DEB95-9B98-4DBC-9D72-5BBAF774A70C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35277AA0-C33A-4721-971A-7213A5B6183E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35277AA0-C33A-4721-971A-7213A5B6183E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35277AA0-C33A-4721-971A-7213A5B6183E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35277AA0-C33A-4721-971A-7213A5B6183E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
