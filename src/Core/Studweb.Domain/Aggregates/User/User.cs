@@ -1,10 +1,10 @@
-﻿using System.Security.Cryptography;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Studweb.Domain.Aggregates.User.Entities;
+using Studweb.Domain.Aggregates.User.ValueObjects;
 using Studweb.Domain.DomainEvents;
-using Studweb.Domain.Entities.ValueObjects;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Entities;
+namespace Studweb.Domain.Aggregates.User;
 
 public sealed class User : AggregateRoot<UserId>
 {
@@ -13,18 +13,23 @@ public sealed class User : AggregateRoot<UserId>
     public string Email { get; set; }
     public string Password { get; set; }
     public DateTime Birthday { get; set; }
-    public DateTime CreatedOnUtc { get; }
+    public DateTime CreatedOnUtc { get; private set; }
     
     // TODO: Function to verify user
     public DateTime? VerifiedOnUtc { get; set; }
     
     public DateTime? LastModifiedPasswordOnUtc { get; set; }
-    public VerificationToken? VerificationToken { get; }
+    public VerificationToken? VerificationToken { get; private set; }
     
     // TODO: Function to generate reset password token
     public ResetPasswordToken? ResetPasswordToken { get; private set; }
     public DateTime? BanTime { get; set; }
     public Role Role { get; set; }
+
+    private User(UserId id = default) : base(id)
+    {
+        
+    }
 
     [JsonConstructor]
     private User(
@@ -43,11 +48,12 @@ public sealed class User : AggregateRoot<UserId>
         Password = password;
         Birthday = birthday;
         CreatedOnUtc = DateTime.UtcNow;
-        VerificationToken = VerificationToken.Create();
+        VerificationToken = VerificationToken.Create(VerificationTokenId.Create(-1));
         Role = role;
     }
 
     public static User Create(
+        UserId? userId,
         string firstName,
         string lastName,
         string email,
@@ -56,8 +62,13 @@ public sealed class User : AggregateRoot<UserId>
         Role role
     )
     {
+        if (userId is null)
+        {
+            userId = UserId.Create(-1);
+        }
+        
         var user = new User(
-            UserId.Create(-1), 
+            userId,
             firstName,
             lastName,
             email,
@@ -69,6 +80,41 @@ public sealed class User : AggregateRoot<UserId>
 
         return user;
     }
+
+    public User Load(
+        UserId id,
+        string firstName,
+        string lastName,
+        string email,
+        string password,
+        DateTime birthday,
+        DateTime createdOnUtc,
+        DateTime? verifiedOnUtc,
+        DateTime? lastModifiedPasswordOnUtc,
+        DateTime? banTime,
+        Role role,
+        VerificationToken verificationToken,
+        ResetPasswordToken resetPasswordToken
+    )
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Password = password;
+        Birthday = birthday;
+        CreatedOnUtc = createdOnUtc;
+        VerifiedOnUtc = verifiedOnUtc;
+        LastModifiedPasswordOnUtc = lastModifiedPasswordOnUtc;
+        BanTime = banTime;
+        Role = role;
+        VerificationToken = verificationToken;
+        ResetPasswordToken = resetPasswordToken;
+        return this;
+    }
+
+    public static User Empty() => new User();
+
 }
 
 

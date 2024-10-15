@@ -1,13 +1,14 @@
-﻿using System.Security.Cryptography;
-using ErrorOr;
+﻿using ErrorOr;
 using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Contracts.Authentication;
 using Studweb.Application.Persistance;
 using Studweb.Application.Utils;
+using Studweb.Domain.Aggregates.User;
+using Studweb.Domain.Aggregates.User.Entities;
+using Studweb.Domain.Aggregates.User.ValueObjects;
 using Studweb.Domain.Common.Errors;
-using Studweb.Domain.Entities;
 
-namespace Studweb.Application.Features.Users.Commands;
+namespace Studweb.Application.Features.Users.Commands.RegisterUser;
 
 public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterResponse>
 {
@@ -29,12 +30,13 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
     {
         var userId = await _userRepository.GetByEmailAsync(request.Email);
         
-        if (userId != 0)
+        if (userId is not null)
         {
             return Errors.User.DuplicateEmail;
         }
 
         var user = User.Create(
+            UserId.Create(-1), 
             request.FirstName,
             request.LastName,
             request.Email,
@@ -49,7 +51,8 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
         
         _unitOfWork.CommitAndCloseConnection();
 
-        var id = await _userRepository.GetByEmailAsync(user.Email);
+        var newUser = await _userRepository.GetByEmailAsync(user.Email);
+        var id = newUser.Id.Value;
         
         
         return new RegisterResponse(id, "Successfully registered! Check your email!");

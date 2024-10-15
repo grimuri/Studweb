@@ -1,5 +1,4 @@
-﻿using Studweb.Domain.Entities;
-using Studweb.Domain.Entities.Enums;
+﻿using Studweb.Domain.Aggregates.User.Enums;
 
 namespace Studweb.Domain.Common.Interfaces;
 

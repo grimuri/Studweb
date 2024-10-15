@@ -4,7 +4,6 @@ using FluentEmail.Core;
 using MediatR;
 using Studweb.Application.Persistance;
 using Studweb.Domain.DomainEvents;
-using Studweb.Domain.Entities;
 using Studweb.Domain.Primitives;
 
 namespace Studweb.Application.Features.Users.Events;
@@ -29,7 +28,8 @@ public sealed class UserRegisteredDomainEventHandler : INotificationHandler<User
         var verificationToken = notification.User.VerificationToken;
         var verificationTokenId = await _tokenRepository.AddTokenAsync(verificationToken, cancellationToken);
 
-        var userId = await _userRepository.GetByEmailAsync(notification.User.Email);
+        var user = await _userRepository.GetByEmailAsync(notification.User.Email);
+        var userId = user.Id.Value;
         await _userRepository.EditVerificationTokenAsync(userId, verificationTokenId, cancellationToken);
 
         await _email

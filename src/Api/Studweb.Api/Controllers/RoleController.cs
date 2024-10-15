@@ -5,7 +5,6 @@ using Studweb.Application.Features.Roles.Commands.DeleteRole;
 using Studweb.Application.Features.Roles.Commands.EditRole;
 using Studweb.Application.Features.Roles.Queries.GetRoleById;
 using Studweb.Application.Features.Roles.Queries.GetRoles;
-using Studweb.Domain.Entities;
 
 namespace Studweb.Api.Controllers;
 

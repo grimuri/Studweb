@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Studweb.Application.Features.Users.Commands;
+namespace Studweb.Application.Features.Users.Commands.RegisterUser;
 
 public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {

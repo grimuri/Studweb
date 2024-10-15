@@ -1,4 +1,5 @@
 using Studweb.Application.Features.Users.Commands;
+using Studweb.Application.Features.Users.Commands.RegisterUser;
 using Studweb.IntegrationTests.TestUtils;
 
 namespace Studweb.IntegrationTests.Users.TestUtils;

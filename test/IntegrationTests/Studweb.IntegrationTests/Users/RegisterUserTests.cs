@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Studweb.Application.Features.Users.Commands;
+using Studweb.Application.Features.Users.Commands.RegisterUser;
 using Studweb.IntegrationTests.Abstractions;
 using static Studweb.IntegrationTests.Users.TestUtils.RegisterUserCommandBuilder;
 

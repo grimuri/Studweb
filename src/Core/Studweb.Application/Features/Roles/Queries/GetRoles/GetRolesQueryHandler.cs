@@ -2,7 +2,7 @@
 using MediatR;
 using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Persistance;
-using Studweb.Domain.Entities;
+using Studweb.Domain.Aggregates.User.Entities;
 
 namespace Studweb.Application.Features.Roles.Queries.GetRoles;
 

@@ -1,5 +1,5 @@
-﻿using Studweb.Domain.Entities;
-using Studweb.Domain.Entities.ValueObjects;
+﻿using Studweb.Domain.Aggregates.User.Entities;
+using Studweb.Domain.Aggregates.User.ValueObjects;
 
 namespace Studweb.Infrastructure.Utils.TempClasses;
 

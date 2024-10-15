@@ -21,10 +21,7 @@ public class TokenRepository : ITokenRepository
     public async Task<int> AddTokenAsync(IToken token, CancellationToken cancellationToken = default)
     {
         var connection = _dbContext.Connection;
-
-
         
-        // TODO: Adding token to database
         const string sql = @"INSERT INTO Tokens (Value, CreatedOnUtc, ExpiresOnUtc, Type) 
                             OUTPUT Inserted.Id
                             VALUES (@Value, @CreatedOnUtc, @ExpiresOnUtc, @Type)";

@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Studweb.Domain.Entities.ValueObjects;
+using Studweb.Domain.Aggregates.User.ValueObjects;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Entities;
+namespace Studweb.Domain.Aggregates.User.Entities;
 
 public sealed class Role : Entity<RoleId>
 {

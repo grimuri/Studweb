@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Entities.ValueObjects;
+namespace Studweb.Domain.Aggregates.User.ValueObjects;
 
 public class VerificationTokenId : ValueObject
 {
@@ -13,7 +13,7 @@ public class VerificationTokenId : ValueObject
         Value = value;
     }
 
-    public static VerificationTokenId Create() => new VerificationTokenId();
+    public static VerificationTokenId Create(int id = default) => new VerificationTokenId(id);
 
     public override IEnumerable<object> GetEqualityComponents()
     {

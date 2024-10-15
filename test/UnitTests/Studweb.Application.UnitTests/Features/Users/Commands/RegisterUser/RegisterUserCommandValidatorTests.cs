@@ -1,10 +1,8 @@
-using FluentValidation;
 using FluentValidation.TestHelper;
-using Studweb.Application.Features.Users.Commands;
-using Studweb.Application.UnitTests.Features.Users.Commands.TestUtils;
-using Studweb.Application.UnitTests.TestUtils;
+using Studweb.Application.Features.Users.Commands.RegisterUser;
+using Studweb.Application.UnitTests.Features.Users.Commands.RegisterUser.TestUtils;
 
-namespace Studweb.Application.UnitTests.Features.Users.Commands;
+namespace Studweb.Application.UnitTests.Features.Users.Commands.RegisterUser;
 
 public class RegisterUserCommandValidatorTests
 {
