@@ -31,7 +31,6 @@ public class UserRepository : IUserRepository
     {
         var connection = _dbContext.Connection;
 
-        // TODO: Fix this
         const string sql = @"
                             SELECT 
                                 u.Id,

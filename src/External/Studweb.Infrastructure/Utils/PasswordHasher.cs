@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using Studweb.Application.Utils;
 
-namespace Studweb.Infrastructure.Utilities;
+namespace Studweb.Infrastructure.Utils;
 
 public sealed class PasswordHasher : IPasswordHasher
 {
@@ -21,6 +21,12 @@ public sealed class PasswordHasher : IPasswordHasher
 
     public bool Verify(string password, string passwordHash)
     {
-        throw new NotImplementedException();
+        var parts = passwordHash.Split("-");
+        var salt = Convert.FromHexString(parts[1]);
+        var hash = Convert.FromHexString(parts[0]);
+
+        var inputHash = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, Algorithm, HashSize);
+
+        return hash.SequenceEqual(inputHash);
     }
 }

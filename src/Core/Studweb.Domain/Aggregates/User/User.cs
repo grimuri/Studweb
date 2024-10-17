@@ -16,7 +16,7 @@ public sealed class User : AggregateRoot<UserId>
     public DateTime CreatedOnUtc { get; private set; }
     
     // TODO: Function to verify user
-    public DateTime? VerifiedOnUtc { get; set; }
+    public DateTime? VerifiedOnUtc { get; set; } = DateTime.UtcNow;
     
     public DateTime? LastModifiedPasswordOnUtc { get; set; }
     public VerificationToken? VerificationToken { get; private set; }
