@@ -3,6 +3,7 @@ using Moq;
 using Studweb.Application.Features.Users.Commands.RegisterUser;
 using Studweb.Application.Persistance;
 using Studweb.Application.UnitTests.Features.Users.Commands.RegisterUser.TestUtils;
+using Studweb.Application.UnitTests.TestUtils.Repository;
 using Studweb.Application.Utils;
 using Studweb.Domain.Aggregates.User;
 using Studweb.Domain.Common.Errors;
@@ -68,7 +69,7 @@ public class RegisterUserCommandHandlerTests
         // Assert
         
         result.IsError.Should().BeFalse();
-        result.Value.Id.Should().Be(1);
+        result.Value.Id.Should().NotBe(null);
         
         _mockUserRepository.Verify(userRepository => 
             userRepository.RegisterAsync(

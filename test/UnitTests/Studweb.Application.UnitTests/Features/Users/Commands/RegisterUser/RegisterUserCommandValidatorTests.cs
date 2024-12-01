@@ -12,7 +12,7 @@ public class RegisterUserCommandValidatorTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
-    public void Email_ShouldNotBeEmpty(string email)
+    public void Email_Should_NotBeEmpty(string email)
     {
         // Arrange
 
@@ -35,7 +35,7 @@ public class RegisterUserCommandValidatorTests
     [InlineData("test.com")]
     [InlineData("@gmail.com")]
     [InlineData("test@test@gmail.com")]
-    public void Email_ShouldBeValid(string email)
+    public void Email_Should_BeValid(string email)
     {
         // Arrange
 
@@ -58,7 +58,7 @@ public class RegisterUserCommandValidatorTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
-    public void FirstName_ShouldNotBeEmpty(string firstName)
+    public void FirstName_Should_NotBeEmpty(string firstName)
     {
         // Arrange
 
@@ -81,7 +81,7 @@ public class RegisterUserCommandValidatorTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
-    public void LastName_ShouldNotBeEmpty(string lastName)
+    public void LastName_Should_NotBeEmpty(string lastName)
     {
         // Arrange
 
@@ -104,7 +104,7 @@ public class RegisterUserCommandValidatorTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
-    public void Password_ShouldNotBeEmpty(string password)
+    public void Password_Should_NotBeEmpty(string password)
     {
         // Arrange
 
@@ -131,7 +131,7 @@ public class RegisterUserCommandValidatorTests
     [InlineData("aaaaa")]
     [InlineData("aaaaaa")]
     [InlineData("aaaaaaa")]
-    public void Password_ShouldNotBeShorterThan8Characters(string password)
+    public void Password_Should_NotBeShorterThan8Characters(string password)
     {
         // Arrange
 
@@ -154,7 +154,7 @@ public class RegisterUserCommandValidatorTests
     [InlineData("qwerty123", "qwerty12")]
     [InlineData("qwerty1234", "qwerty1233")]
     [InlineData("qwerty123", "qwerty1234")]
-    public void ConfirmPassword_ShouldBeTheSameAsPassword(string confirmPassword, string password)
+    public void ConfirmPassword_Should_BeTheSameAsPassword(string confirmPassword, string password)
     {
         // Arrange
 
@@ -176,7 +176,7 @@ public class RegisterUserCommandValidatorTests
 
     [Theory]
     [InlineData(null)]
-    public void Birthday_ShouldNotBeEmpty(DateTime birthday)
+    public void Birthday_Should_NotBeEmpty(DateTime birthday)
     {
         // Arrange
 
@@ -197,7 +197,7 @@ public class RegisterUserCommandValidatorTests
 
     [Theory]
     [MemberData(nameof(Birthdays))]
-    public void Birthday_ShouldIndicateUserIsAtLeast13YearsOld(DateTime birthday)
+    public void Birthday_Should_IndicateUserIsAtLeast13YearsOld(DateTime birthday)
     {
         // Arrange
 
