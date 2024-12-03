@@ -47,8 +47,9 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
     private void CreateDb()
     {
         string script = File.ReadAllText("../../../../../../src/External/Studweb.Infrastructure/DbScripts/db.sql");
-        SqlConnection conn = new SqlConnection(_dbContainer.GetConnectionString());
-
-        conn.Execute(script);
+        using (var conn = new SqlConnection(_dbContainer.GetConnectionString()))
+        {
+            conn.Execute(script);
+        }
     }
 }

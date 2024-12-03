@@ -61,7 +61,6 @@ public class UserRepository : IUserRepository
                             LEFT JOIN Roles r ON r.Id = u.RoleId
                             WHERE u.Email = @Email;";
 
-    // Pobieranie danych użytkownika i tokenów
     var userWithTokens = await connection.QueryFirstOrDefaultAsync<UserWithTokensTemp>(sql, new { Email = email });
 
     if (userWithTokens is null)
