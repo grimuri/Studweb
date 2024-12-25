@@ -11,6 +11,17 @@ using Studweb.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 {
     // Add services to the container.
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("frontend", policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowAnyOrigin();
+        });
+    });
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -80,6 +91,8 @@ var app = builder.Build();
 
     app.UseHttpsRedirection();
 
+    app.UseCors("frontend");
+    
     app.UseAuthentication();
 
     app.UseAuthorization();
