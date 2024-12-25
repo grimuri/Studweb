@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Entities.ValueObjects;
+namespace Studweb.Domain.Aggregates.User.ValueObjects;
 
 public class ResetPasswordTokenId : ValueObject
 {
@@ -13,7 +13,7 @@ public class ResetPasswordTokenId : ValueObject
         Value = value;
     }
 
-    public static ResetPasswordTokenId Create() => new ResetPasswordTokenId();
+    public static ResetPasswordTokenId Create(int id = default) => new ResetPasswordTokenId(id);
     
     public override IEnumerable<object> GetEqualityComponents()
     {

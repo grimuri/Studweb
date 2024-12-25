@@ -1,4 +1,4 @@
-﻿using Studweb.Domain.Entities;
+﻿using Studweb.Domain.Aggregates.User.Entities;
 
 namespace Studweb.Application.Persistance;
 

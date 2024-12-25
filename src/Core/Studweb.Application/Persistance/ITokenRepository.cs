@@ -1,5 +1,4 @@
 ﻿using Studweb.Domain.Common.Interfaces;
-using Studweb.Domain.Entities;
 
 namespace Studweb.Application.Persistance;
 

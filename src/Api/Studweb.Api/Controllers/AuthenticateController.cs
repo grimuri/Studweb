@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Studweb.Application.Contracts.Authentication;
 using Studweb.Application.Features.Users.Commands;
+using Studweb.Application.Features.Users.Commands.RegisterUser;
 
 namespace Studweb.Api.Controllers;
 

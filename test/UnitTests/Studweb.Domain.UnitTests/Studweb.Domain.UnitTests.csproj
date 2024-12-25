@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Core\Studweb.Domain\Studweb.Domain.csproj" />
+      <ProjectReference Include="..\..\..\src\Core\Studweb.Domain\Studweb.Domain.csproj" />
     </ItemGroup>
 
 </Project>

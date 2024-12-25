@@ -1,5 +1,4 @@
-﻿using Studweb.Domain.Entities;
-using Studweb.Domain.Entities.ValueObjects;
+﻿using Studweb.Domain.Aggregates.User;
 using Studweb.Domain.Primitives;
 
 namespace Studweb.Domain.DomainEvents;

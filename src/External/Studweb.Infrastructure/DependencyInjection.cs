@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Quartz;
 using Studweb.Application.Persistance;
 using Studweb.Application.Utils;
+using Studweb.Infrastructure.Authentication;
 using Studweb.Infrastructure.BackgroundJobs;
 using Studweb.Infrastructure.Outbox;
 using Studweb.Infrastructure.Persistance;
@@ -51,7 +54,7 @@ public static class DependencyInjection
         });
         services.AddQuartzHostedService();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
-        
+        services.AddScoped<IJwtProvider, JwtProvider>();
         
         return services;
     }

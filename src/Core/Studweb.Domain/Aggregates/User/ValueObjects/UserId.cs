@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Entities.ValueObjects;
+namespace Studweb.Domain.Aggregates.User.ValueObjects;
 
 
 public sealed class UserId : ValueObject

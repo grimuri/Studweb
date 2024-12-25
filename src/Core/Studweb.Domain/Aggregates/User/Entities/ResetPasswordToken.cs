@@ -1,32 +1,44 @@
 ﻿using Newtonsoft.Json;
+using Studweb.Domain.Aggregates.User.Enums;
+using Studweb.Domain.Aggregates.User.ValueObjects;
 using Studweb.Domain.Common.Interfaces;
-using Studweb.Domain.Entities.Enums;
-using Studweb.Domain.Entities.ValueObjects;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Entities;
+namespace Studweb.Domain.Aggregates.User.Entities;
 
 public class ResetPasswordToken : Entity<ResetPasswordTokenId>, IToken
 {
-    public Guid Value { get; }
-    public DateTime CreatedOnUtc { get; }
-    public DateTime ExpiresOnUtc { get; }
-    public TokenType Type { get; }
-    
-    [JsonIgnore]
-    public User User { get; }
+    public Guid Value { get; private set; }
+    public DateTime CreatedOnUtc { get; private set; }
+    public DateTime ExpiresOnUtc { get; private set; }
+    public TokenType Type { get; private set; }
 
     [JsonConstructor]
-    private ResetPasswordToken(User user, ResetPasswordTokenId id = default) : base(id)
+    private ResetPasswordToken(ResetPasswordTokenId id) : base(id)
     {
-        User = user;
         Value = Guid.NewGuid();
         CreatedOnUtc = DateTime.UtcNow;
         ExpiresOnUtc = DateTime.UtcNow.AddDays(1);
         Type = TokenType.ResetPasswordToken;
     }
 
-    public static ResetPasswordToken Create(User user) => new ResetPasswordToken(user);
+    public ResetPasswordToken Load(
+        ResetPasswordTokenId id,
+        Guid value,
+        DateTime createdOnUtc,
+        DateTime expiresOnUtc,
+        TokenType tokenType
+    )
+    {
+        Id = id;
+        Value = value;
+        CreatedOnUtc = createdOnUtc;
+        ExpiresOnUtc = expiresOnUtc;
+        Type = tokenType;
+        return this;
+    }
+
+    public static ResetPasswordToken Create(ResetPasswordTokenId id = default) => new ResetPasswordToken(id);
     
     public bool Verify()
     {

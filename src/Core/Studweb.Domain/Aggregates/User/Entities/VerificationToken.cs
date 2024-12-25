@@ -1,17 +1,17 @@
 ﻿using Newtonsoft.Json;
+using Studweb.Domain.Aggregates.User.Enums;
+using Studweb.Domain.Aggregates.User.ValueObjects;
 using Studweb.Domain.Common.Interfaces;
-using Studweb.Domain.Entities.Enums;
-using Studweb.Domain.Entities.ValueObjects;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Entities;
+namespace Studweb.Domain.Aggregates.User.Entities;
 
 public class VerificationToken : Entity<VerificationTokenId>, IToken
 {
-    public Guid Value { get; }
-    public DateTime CreatedOnUtc { get; }
-    public DateTime ExpiresOnUtc { get; }
-    public TokenType Type { get; }
+    public Guid Value { get; private set; }
+    public DateTime CreatedOnUtc { get; private set; }
+    public DateTime ExpiresOnUtc { get; private set; }
+    public TokenType Type { get; private set; }
 
     [JsonConstructor]
     private VerificationToken(VerificationTokenId id = default) : base(id)
@@ -22,8 +22,23 @@ public class VerificationToken : Entity<VerificationTokenId>, IToken
         Type = TokenType.VerificationToken;
     }
 
-    public static VerificationToken Create() => new VerificationToken();
-    
+    public static VerificationToken Create(VerificationTokenId id = default) => new VerificationToken(id);
+
+    public VerificationToken Load(
+        VerificationTokenId id,
+        Guid value,
+        DateTime createdOnUtc,
+        DateTime expiresOnUtc,
+        TokenType tokenType)
+    {
+        Id = id;
+        Value = value;
+        CreatedOnUtc = createdOnUtc;
+        ExpiresOnUtc = expiresOnUtc;
+        Type = tokenType;
+        return this;
+    }
+
     public bool Verify()
     {
         if (ExpiresOnUtc.CompareTo(DateTime.UtcNow) == 1)
@@ -33,4 +48,5 @@ public class VerificationToken : Entity<VerificationTokenId>, IToken
 
         return true;
     }
+    
 }

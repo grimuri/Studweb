@@ -19,6 +19,10 @@
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0-rc.1.24431.7" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Users\Queries\" />
+    </ItemGroup>
     
     
 

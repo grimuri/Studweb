@@ -1,13 +1,14 @@
 using FluentAssertions;
 using Moq;
-using Studweb.Application.Features.Users.Commands;
+using Studweb.Application.Features.Users.Commands.RegisterUser;
 using Studweb.Application.Persistance;
-using Studweb.Application.UnitTests.Features.Users.Commands.TestUtils;
+using Studweb.Application.UnitTests.Features.Users.Commands.RegisterUser.TestUtils;
+using Studweb.Application.UnitTests.TestUtils.Repository;
 using Studweb.Application.Utils;
+using Studweb.Domain.Aggregates.User;
 using Studweb.Domain.Common.Errors;
-using Studweb.Domain.Entities;
 
-namespace Studweb.Application.UnitTests.Features.Users.Commands;
+namespace Studweb.Application.UnitTests.Features.Users.Commands.RegisterUser;
 
 public class RegisterUserCommandHandlerTests
 {
@@ -36,7 +37,7 @@ public class RegisterUserCommandHandlerTests
 
         _mockUserRepository.Setup(repository => 
                 repository.GetByEmailAsync(It.IsAny<string>(), default))
-            .ReturnsAsync(1);
+            .ReturnsAsync(UserRepositoryUtils.GetByEmailExampleUser());
         
         // Act
 
@@ -58,8 +59,8 @@ public class RegisterUserCommandHandlerTests
 
         _mockUserRepository.SetupSequence(repository =>
                 repository.GetByEmailAsync(It.IsAny<string>(), default))
-            .ReturnsAsync(0) // Simulate email does not exist
-            .ReturnsAsync(1);
+            .ReturnsAsync(value: null) // Simulate email does not exist
+            .ReturnsAsync(UserRepositoryUtils.GetByEmailExampleUser());
         
         // Act
         
@@ -68,7 +69,7 @@ public class RegisterUserCommandHandlerTests
         // Assert
         
         result.IsError.Should().BeFalse();
-        result.Value.Id.Should().Be(1);
+        result.Value.Id.Should().NotBe(null);
         
         _mockUserRepository.Verify(userRepository => 
             userRepository.RegisterAsync(

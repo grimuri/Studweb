@@ -1,12 +1,15 @@
 ﻿using Dapper;
 using Microsoft.IdentityModel.Tokens;
 using Studweb.Application.Persistance;
-using Studweb.Domain.Entities;
-using Studweb.Domain.Entities.ValueObjects;
+using Studweb.Domain.Aggregates.User;
+using Studweb.Domain.Aggregates.User.Entities;
+using Studweb.Domain.Aggregates.User.Enums;
+using Studweb.Domain.Aggregates.User.ValueObjects;
 using Studweb.Infrastructure.Outbox;
 using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
+using Studweb.Infrastructure.Utils.TempClasses;
 
 namespace Studweb.Infrastructure.Repositories;
 
@@ -24,16 +27,49 @@ public class UserRepository : IUserRepository
         _outboxMessageRepository = outboxMessageRepository;
     }
 
-    public async Task<int> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {
         var connection = _dbContext.Connection;
 
-        const string sql = @"SELECT Id FROM Users WHERE Email = @Email";
+        const string sql = @"
+                            SELECT 
+                                u.Id,
+                                u.FirstName,
+                                u.LastName,
+                                u.Email,
+                                u.Password,
+                                u.Birthday,
+                                u.CreatedOnUtc,
+                                u.VerifiedOnUtc,
+                                u.LastModifiedPasswordOnUtc,
+                                u.BanTime,
+                                r.Id AS RoleId,
+                                r.Name AS RoleName,
+                                vt.Id AS VerificationTokenId,
+                                vt.Value AS VerificationTokenValue,
+                                vt.CreatedOnUtc AS VerificationTokenCreatedOnUtc,
+                                vt.ExpiresOnUtc AS VerificationTokenExpiresOnUtc,
+                                vt.Type AS VerificationTokenType,
+                                rt.Id AS ResetPasswordTokenId,
+                                rt.Value AS ResetPasswordTokenValue,
+                                rt.CreatedOnUtc AS ResetPasswordTokenCreatedOnUtc,
+                                rt.ExpiresOnUtc AS ResetPasswordTokenExpiresOnUtc,
+                                rt.Type AS ResetPasswordTokenType
+                            FROM Users u
+                            LEFT JOIN Tokens vt ON vt.Id = u.VerificationTokenId
+                            LEFT JOIN Tokens rt ON rt.Id = u.ResetPasswordTokenId
+                            LEFT JOIN Roles r ON r.Id = u.RoleId
+                            WHERE u.Email = @Email;";
 
-        var id = await connection.ExecuteScalarAsync<int>(sql, new { Email = email });
+    var userWithTokens = await connection.QueryFirstOrDefaultAsync<UserWithTokensTemp>(sql, new { Email = email });
 
-        return id;
+    if (userWithTokens is null)
+    {
+        return null;
     }
+    
+    return userWithTokens.ParseToUser();
+}
 
     public async Task RegisterAsync(User user, CancellationToken cancellationToken = default)
     {

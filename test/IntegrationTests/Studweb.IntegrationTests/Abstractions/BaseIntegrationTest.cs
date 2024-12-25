@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Studweb.Infrastructure.Persistance;
+using Studweb.IntegrationTests.TestUtils;
 
 namespace Studweb.IntegrationTests.Abstractions;
 
@@ -15,6 +16,7 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
         _scope = factory.Services.CreateScope();
         Sender = _scope.ServiceProvider.GetRequiredService<ISender>();
         DbContext = _scope.ServiceProvider.GetRequiredService<IDbContext>();
+        DataSeeder.Seed(DbContext);
     }
 
     protected ISender Sender { get; }

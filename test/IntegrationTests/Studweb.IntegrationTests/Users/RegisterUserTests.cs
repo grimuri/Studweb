@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Studweb.Application.Features.Users.Commands;
+using Studweb.Application.Features.Users.Commands.RegisterUser;
 using Studweb.IntegrationTests.Abstractions;
 using static Studweb.IntegrationTests.Users.TestUtils.RegisterUserCommandBuilder;
 
@@ -12,7 +13,7 @@ public class RegisterUserTests : BaseIntegrationTest
     }
 
     [Fact]
-    public async Task Handle_ShouldCreateUserAndInsertToDb_WhenCommandIsValid()
+    public async Task Handle_Should_CreateUserAndInsertToDb_WhenCommandIsValid()
     {
         // Arrange
 
@@ -31,7 +32,7 @@ public class RegisterUserTests : BaseIntegrationTest
 
     [Theory]
     [MemberData(nameof(InvalidRegisterUserCommandData))]
-    public async Task Handle_ShouldReturnValidationError_WhenCommandIsInvalid(RegisterUserCommand command)
+    public async Task Handle_Should_ReturnValidationError_WhenCommandIsInvalid(RegisterUserCommand command)
     {
         // Arrange
         
