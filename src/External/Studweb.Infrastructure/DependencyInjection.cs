@@ -55,6 +55,10 @@ public static class DependencyInjection
         services.AddQuartzHostedService();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtProvider, JwtProvider>();
+        services.AddScoped<IUserContext, UserContext>();
+        services.AddScoped<ITagRepository, TagRepository>();
+        services.AddScoped<INoteRepository, NoteRepository>();
+        services.AddHttpContextAccessor();
         
         return services;
     }

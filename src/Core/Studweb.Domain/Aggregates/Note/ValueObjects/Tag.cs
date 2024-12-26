@@ -6,9 +6,9 @@ namespace Studweb.Domain.Aggregates.Note.ValueObjects;
 public sealed class Tag : ValueObject
 {
     public string Value { get; }
-
+    
     [JsonConstructor]
-    private Tag(string value)
+    public Tag(string value)
     {
         Value = value;
     }

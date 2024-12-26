@@ -88,6 +88,7 @@ var app = builder.Build();
 
     app.AddAuthenticationEndpoints();
     app.AddTestEnpoints();
+    app.AddNoteEndpoints();
 
     app.UseHttpsRedirection();
 

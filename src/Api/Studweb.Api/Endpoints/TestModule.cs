@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using Studweb.Domain.Aggregates.Note.ValueObjects;
 using static Studweb.Api.Common.HttpResultsExtensions;
 
 namespace Studweb.Api.Endpoints;

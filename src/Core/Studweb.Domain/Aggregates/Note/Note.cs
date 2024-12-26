@@ -18,6 +18,7 @@ public sealed class Note : AggregateRoot<NoteId>
     {
     }
 
+    [JsonConstructor]
     private Note(
         NoteId noteId,
         string title,
