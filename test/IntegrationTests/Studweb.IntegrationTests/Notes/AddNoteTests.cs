@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Studweb.Application.Features.Notes.Commands.AddNote;
 using Studweb.Domain.Common.Errors;
 using Studweb.IntegrationTests.Abstractions;
 
@@ -48,5 +49,29 @@ public class AddNoteTests : BaseIntegrationTest
 
         result.IsError.Should().BeTrue();
         result.Errors.Should().Contain(Errors.User.UserNotAuthenticated);
+    }
+
+    [Theory]
+    [MemberData(nameof(InvalidAddNoteCommandData))]
+    public async Task Handle_Should_ReturnValidationError_WhenCommandIsInvalid(AddNoteCommand command)
+    {
+        // Arrange
+        
+        // Act
+
+        var result = await Sender.Send(command);
+        
+        // Assert
+
+        result.IsError.Should().BeTrue();
+    }
+
+    public static IEnumerable<object[]> InvalidAddNoteCommandData()
+    {
+        return new List<object[]>
+        {
+            new[] { GivenAddNoteCommand().WithInvalidTitle().Build() },
+            new[] { GivenAddNoteCommand().WithInvalidContent().Build() }
+        };
     }
 }
