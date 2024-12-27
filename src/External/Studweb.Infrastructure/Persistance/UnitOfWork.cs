@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using Studweb.Application.Persistance;
-using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 
 namespace Studweb.Infrastructure.Persistance;

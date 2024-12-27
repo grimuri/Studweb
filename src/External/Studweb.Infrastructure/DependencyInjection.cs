@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -10,8 +11,8 @@ using Studweb.Infrastructure.BackgroundJobs;
 using Studweb.Infrastructure.Outbox;
 using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Repositories;
-using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
+using Studweb.Infrastructure.Utils.Converters;
 
 namespace Studweb.Infrastructure;
 
@@ -60,6 +61,10 @@ public static class DependencyInjection
         services.AddScoped<INoteRepository, NoteRepository>();
         services.AddHttpContextAccessor();
         
+        services.Configure<JsonOptions>(options =>
+        {
+            options.SerializerOptions.Converters.Add(new TagJsonConverter());
+        });
         return services;
     }
 }

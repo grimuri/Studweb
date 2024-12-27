@@ -3,12 +3,14 @@ using Studweb.Domain.Primitives;
 
 namespace Studweb.Domain.Aggregates.Note.ValueObjects;
 
+// TODO: Move to domain layer
+
 public sealed class Tag : ValueObject
 {
     public string Value { get; }
     
     [JsonConstructor]
-    public Tag(string value)
+    private Tag(string value)
     {
         Value = value;
     }

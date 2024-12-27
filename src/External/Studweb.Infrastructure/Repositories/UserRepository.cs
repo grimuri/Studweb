@@ -7,7 +7,6 @@ using Studweb.Domain.Aggregates.User.Enums;
 using Studweb.Domain.Aggregates.User.ValueObjects;
 using Studweb.Infrastructure.Outbox;
 using Studweb.Infrastructure.Persistance;
-using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 using Studweb.Infrastructure.Utils.TempClasses;
 
