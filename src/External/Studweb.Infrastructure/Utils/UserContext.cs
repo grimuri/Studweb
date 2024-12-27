@@ -13,18 +13,16 @@ public sealed class UserContext : IUserContext
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public bool IsAuthenticated =>
+    public bool? IsAuthenticated =>
         _httpContextAccessor
             .HttpContext?
             .User
             .Identity?
-            .IsAuthenticated ??
-        throw new ApplicationException("User context is unavailable");
+            .IsAuthenticated;
 
-    public int UserId =>
+    public int? UserId =>
         _httpContextAccessor
             .HttpContext?
             .User
-            .GetUserId() ??
-        throw new ApplicationException("User context is unavailable");
+            .GetUserId();
 }

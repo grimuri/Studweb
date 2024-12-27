@@ -1,4 +1,4 @@
-namespace Studweb.IntegrationTests.TestUtils;
+namespace Studweb.IntegrationTests.TestUtils.Constants;
 
 public static partial class Constants
 {

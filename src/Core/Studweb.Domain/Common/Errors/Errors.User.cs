@@ -21,5 +21,9 @@ public static partial class Errors
         public static Error IncorrectData = Error.Conflict(
             code: "User.IncorrectData",
             description: "Login or password is incorrect");
+
+        public static Error UserNotAuthenticated = Error.Forbidden(
+            code: "User.UserNotAuthenticated",
+            description: "User is not authenticated");
     }
 }

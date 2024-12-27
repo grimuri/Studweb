@@ -20,7 +20,7 @@ public class UserContextTests
     }
 
     [Fact]
-    public void IsAuthenticated_ShouldThrowApplicationException_WhenHttpContextIsNull()
+    public void IsAuthenticated_ShouldReturnNull_WhenHttpContextDoesNotExist()
     {
         // Arrange
 
@@ -30,16 +30,15 @@ public class UserContextTests
         
         // Act
 
-        Action action = () => _ = _userContext.IsAuthenticated;
+        var result = _userContext.IsAuthenticated;
         
         // Assert
 
-        action.Should().Throw<ApplicationException>()
-            .WithMessage("User context is unavailable");
+        result.Should().BeNull();
     }
 
     [Fact]
-    public void IsAuthenticated_ShouldThrowApplicationException_WhenIdentityIsNull()
+    public void IsAuthenticated_ShouldReturnNull_WhenIdentityDoesNotExist()
     {
         // Arrange
 
@@ -52,12 +51,11 @@ public class UserContextTests
         
         // Act
 
-        Action action = () => _ = _userContext.IsAuthenticated;
+        var result = _userContext.IsAuthenticated;
         
         // Assert
 
-        action.Should().Throw<ApplicationException>()
-            .WithMessage("User context is unavailable");
+        result.Should().BeNull();
     }
 
     [Fact]
@@ -105,7 +103,7 @@ public class UserContextTests
     }
     
     [Fact]
-    public void UserId_ShouldThrowApplicationException_WhenHttpContextIsNull()
+    public void UserId_ShouldReturnNull_WhenHttpContextDoesNotExist()
     {
         // Arrange
 
@@ -115,12 +113,11 @@ public class UserContextTests
         
         // Act
 
-        Action action = () => _ = _userContext.UserId;
+        var result = _userContext.UserId;
         
         // Assert
 
-        action.Should().Throw<ApplicationException>()
-            .WithMessage("User context is unavailable");
+        result.Should().BeNull();
     }
 
     [Fact]

@@ -6,6 +6,7 @@ using Studweb.Application.Utils;
 using Studweb.Domain.Aggregates.Note;
 using Studweb.Domain.Aggregates.Note.ValueObjects;
 using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Common.Errors;
 
 namespace Studweb.Application.Features.Notes.Commands.AddNote;
 
@@ -24,12 +25,19 @@ public class AddNoteCommandHandler : ICommandHandler<AddNoteCommand, AddNoteResp
 
     public async Task<ErrorOr<AddNoteResponse>> Handle(AddNoteCommand request, CancellationToken cancellationToken)
     {
+        var userId = _userContext.UserId;
+        
+        if (userId is null)
+        {
+            return Errors.User.UserNotAuthenticated;
+        }
+        
         var note = Note.Create(
             NoteId.Create(), 
             request.Title,
             request.Content,
             request.Tags,
-            UserId.Create(_userContext.UserId)
+            UserId.Create(userId ?? 0)
         );
         
         int noteId = await _noteRepository.CreateAsync(note);

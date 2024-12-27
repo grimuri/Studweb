@@ -1,5 +1,8 @@
 using Dapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +41,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         CreateDb();
     }
 
-    public new async Task DisposeAsync() 
+    public new async Task DisposeAsync()
     {
         await _dbContainer.StopAsync();
     }
