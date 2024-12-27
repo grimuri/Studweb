@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Studweb.Infrastructure.Persistance;
-using Studweb.Infrastructure.Utilities;
 using Testcontainers.MsSql;
 
 namespace Studweb.IntegrationTests.Abstractions;
