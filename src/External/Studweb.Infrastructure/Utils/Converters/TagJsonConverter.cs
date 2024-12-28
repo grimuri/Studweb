@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Studweb.Domain.Aggregates.Note.ValueObjects;
+using Studweb.Domain.Aggregates.Notes.ValueObjects;
 
 namespace Studweb.Infrastructure.Utils.Converters;
 

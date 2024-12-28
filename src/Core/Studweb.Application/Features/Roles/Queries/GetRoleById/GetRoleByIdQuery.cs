@@ -1,5 +1,5 @@
 ﻿using Studweb.Application.Abstractions.Messaging;
-using Studweb.Domain.Aggregates.User.Entities;
+using Studweb.Domain.Aggregates.Users.Entities;
 
 namespace Studweb.Application.Features.Roles.Queries.GetRoleById;
 

@@ -1,6 +1,6 @@
 ﻿using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Contracts.Role;
-using Studweb.Domain.Aggregates.User.Entities;
+using Studweb.Domain.Aggregates.Users.Entities;
 
 namespace Studweb.Application.Features.Roles.Commands.EditRole;
 

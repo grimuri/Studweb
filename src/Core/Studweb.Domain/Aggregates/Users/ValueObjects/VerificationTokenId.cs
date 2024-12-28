@@ -1,21 +1,20 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Aggregates.User.ValueObjects;
+namespace Studweb.Domain.Aggregates.Users.ValueObjects;
 
-
-public sealed class UserId : ValueObject
+public class VerificationTokenId : ValueObject
 {
     public int Value { get; }
 
     [JsonConstructor]
-    private UserId(int value)
+    private VerificationTokenId(int value = default)
     {
         Value = value;
     }
 
-    public static UserId Create(int id) => new UserId(id);
-    
+    public static VerificationTokenId Create(int id = default) => new VerificationTokenId(id);
+
     public override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

@@ -1,4 +1,4 @@
-﻿using Studweb.Domain.Aggregates.User.Enums;
+﻿using Studweb.Domain.Aggregates.Users.Enums;
 
 namespace Studweb.Domain.Common.Interfaces;
 

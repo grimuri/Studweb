@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Studweb.Domain.Aggregates.Note.ValueObjects;
-using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Aggregates.Notes.ValueObjects;
+using Studweb.Domain.Aggregates.Users.ValueObjects;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Aggregates.Note;
+namespace Studweb.Domain.Aggregates.Notes;
 
 public sealed class Note : AggregateRoot<NoteId>
 {
@@ -57,4 +57,27 @@ public sealed class Note : AggregateRoot<NoteId>
 
         return note;
     }
+
+    public Note Load(
+        NoteId id,
+        string title,
+        string content,
+        DateTime createdOnUtc,
+        DateTime lastModifiedOnUtc,
+        List<Tag> tags,
+        UserId userId
+    )
+    {
+        Id = id;
+        Title = title;
+        Content = content;
+        CreatedOnUtc = createdOnUtc;
+        LastModifiedOnUtc = lastModifiedOnUtc;
+        Tags = tags;
+        UserId = userId;
+
+        return this;
+    }
+
+    public static Note Empty() => new Note();
 }

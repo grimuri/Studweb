@@ -4,7 +4,7 @@ using Studweb.Application.Features.Notes.Commands.AddNote;
 using Studweb.Application.Persistance;
 using Studweb.Application.UnitTests.Features.Notes.Commands.AddNote.TestUtils;
 using Studweb.Application.Utils;
-using Studweb.Domain.Aggregates.Note;
+using Studweb.Domain.Aggregates.Notes;
 using Studweb.Domain.Common.Errors;
 
 namespace Studweb.Application.UnitTests.Features.Notes.Commands.AddNote;

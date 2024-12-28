@@ -1,6 +1,6 @@
 ﻿using Studweb.Application.Abstractions.Messaging;
-using Studweb.Application.Contracts.Note;
-using Studweb.Domain.Aggregates.Note.ValueObjects;
+using Studweb.Application.Contracts.Notes;
+using Studweb.Domain.Aggregates.Notes.ValueObjects;
 
 namespace Studweb.Application.Features.Notes.Commands.AddNote;
 

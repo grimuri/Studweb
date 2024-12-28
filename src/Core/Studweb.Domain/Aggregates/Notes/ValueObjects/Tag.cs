@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Aggregates.Note.ValueObjects;
+namespace Studweb.Domain.Aggregates.Notes.ValueObjects;
 
 // TODO: Move to domain layer
 

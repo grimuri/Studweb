@@ -1,19 +1,19 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Aggregates.Note.ValueObjects;
+namespace Studweb.Domain.Aggregates.Users.ValueObjects;
 
-public sealed class NoteId : ValueObject
+public sealed class RoleId : ValueObject
 {
     public int Value { get; }
 
     [JsonConstructor]
-    private NoteId(int value = default)
+    private RoleId(int value)
     {
         Value = value;
     }
 
-    public static NoteId Create(int id = default) => new NoteId(id);
+    public static RoleId Create(int id) => new RoleId(id);
     
     public override IEnumerable<object> GetEqualityComponents()
     {

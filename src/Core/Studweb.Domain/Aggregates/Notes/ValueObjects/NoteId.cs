@@ -1,19 +1,19 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Aggregates.User.ValueObjects;
+namespace Studweb.Domain.Aggregates.Notes.ValueObjects;
 
-public class ResetPasswordTokenId : ValueObject
+public sealed class NoteId : ValueObject
 {
     public int Value { get; }
 
     [JsonConstructor]
-    private ResetPasswordTokenId(int value = default)
+    private NoteId(int value = default)
     {
         Value = value;
     }
 
-    public static ResetPasswordTokenId Create(int id = default) => new ResetPasswordTokenId(id);
+    public static NoteId Create(int id = default) => new NoteId(id);
     
     public override IEnumerable<object> GetEqualityComponents()
     {

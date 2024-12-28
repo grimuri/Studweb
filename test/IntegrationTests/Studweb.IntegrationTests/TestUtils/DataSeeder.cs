@@ -1,6 +1,5 @@
 using System.Security.Cryptography;
 using Dapper;
-using Studweb.Domain.Aggregates.User.Entities;
 using Studweb.Domain.Common.Interfaces;
 using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Utils.TempClasses;

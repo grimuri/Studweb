@@ -1,6 +1,6 @@
 ﻿using Studweb.Application.Contracts.Authentication;
 using Studweb.Application.Features.Users.Commands;
-using Studweb.Domain.Aggregates.User;
+using Studweb.Domain.Aggregates.Users;
 
 namespace Studweb.Application.Persistance;
 

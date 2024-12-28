@@ -1,4 +1,4 @@
-﻿using Studweb.Domain.Aggregates.User;
+﻿using Studweb.Domain.Aggregates.Users;
 using Studweb.Domain.Primitives;
 
 namespace Studweb.Domain.DomainEvents;

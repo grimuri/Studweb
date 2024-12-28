@@ -3,9 +3,9 @@ using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Contracts.Authentication;
 using Studweb.Application.Persistance;
 using Studweb.Application.Utils;
-using Studweb.Domain.Aggregates.User;
-using Studweb.Domain.Aggregates.User.Entities;
-using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Aggregates.Users;
+using Studweb.Domain.Aggregates.Users.Entities;
+using Studweb.Domain.Aggregates.Users.ValueObjects;
 using Studweb.Domain.Common.Errors;
 
 namespace Studweb.Application.Features.Users.Commands.RegisterUser;

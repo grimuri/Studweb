@@ -1,4 +1,4 @@
-﻿namespace Studweb.Domain.Aggregates.User.Enums;
+﻿namespace Studweb.Domain.Aggregates.Users.Enums;
 
 public enum TokenType
 {

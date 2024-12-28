@@ -1,4 +1,4 @@
-﻿using Studweb.Domain.Aggregates.Note.ValueObjects;
+﻿using Studweb.Domain.Aggregates.Notes.ValueObjects;
 
 namespace Studweb.Application.Persistance;
 

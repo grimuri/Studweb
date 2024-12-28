@@ -1,6 +1,4 @@
-﻿using Studweb.Domain.Aggregates.Note.ValueObjects;
-
-namespace Studweb.Infrastructure.Utils.TempClasses;
+﻿namespace Studweb.Infrastructure.Utils.TempClasses;
 
 public class TagTemp
 {

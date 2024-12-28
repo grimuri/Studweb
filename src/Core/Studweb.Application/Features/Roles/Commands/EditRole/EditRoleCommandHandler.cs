@@ -2,7 +2,7 @@
 using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Contracts.Role;
 using Studweb.Application.Persistance;
-using Studweb.Domain.Aggregates.User.Entities;
+using Studweb.Domain.Aggregates.Users.Entities;
 using Studweb.Domain.Common.Errors;
 
 namespace Studweb.Application.Features.Roles.Commands.EditRole;

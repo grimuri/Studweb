@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using Studweb.Application.Persistance;
-using Studweb.Domain.Aggregates.Note.ValueObjects;
+using Studweb.Domain.Aggregates.Notes.ValueObjects;
 using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Utils.TempClasses;
 

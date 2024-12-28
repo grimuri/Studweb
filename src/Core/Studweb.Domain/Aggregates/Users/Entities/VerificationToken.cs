@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using Studweb.Domain.Aggregates.User.Enums;
-using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Aggregates.Users.Enums;
+using Studweb.Domain.Aggregates.Users.ValueObjects;
 using Studweb.Domain.Common.Interfaces;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Aggregates.User.Entities;
+namespace Studweb.Domain.Aggregates.Users.Entities;
 
-public class ResetPasswordToken : Entity<ResetPasswordTokenId>, IToken
+public class VerificationToken : Entity<VerificationTokenId>, IToken
 {
     public Guid Value { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
@@ -14,21 +14,22 @@ public class ResetPasswordToken : Entity<ResetPasswordTokenId>, IToken
     public TokenType Type { get; private set; }
 
     [JsonConstructor]
-    private ResetPasswordToken(ResetPasswordTokenId id) : base(id)
+    private VerificationToken(VerificationTokenId id = default) : base(id)
     {
         Value = Guid.NewGuid();
         CreatedOnUtc = DateTime.UtcNow;
         ExpiresOnUtc = DateTime.UtcNow.AddDays(1);
-        Type = TokenType.ResetPasswordToken;
+        Type = TokenType.VerificationToken;
     }
 
-    public ResetPasswordToken Load(
-        ResetPasswordTokenId id,
+    public static VerificationToken Create(VerificationTokenId id = default) => new VerificationToken(id);
+
+    public VerificationToken Load(
+        VerificationTokenId id,
         Guid value,
         DateTime createdOnUtc,
         DateTime expiresOnUtc,
-        TokenType tokenType
-    )
+        TokenType tokenType)
     {
         Id = id;
         Value = value;
@@ -38,8 +39,6 @@ public class ResetPasswordToken : Entity<ResetPasswordTokenId>, IToken
         return this;
     }
 
-    public static ResetPasswordToken Create(ResetPasswordTokenId id = default) => new ResetPasswordToken(id);
-    
     public bool Verify()
     {
         if (ExpiresOnUtc.CompareTo(DateTime.UtcNow) == 1)
@@ -49,4 +48,5 @@ public class ResetPasswordToken : Entity<ResetPasswordTokenId>, IToken
 
         return true;
     }
+    
 }

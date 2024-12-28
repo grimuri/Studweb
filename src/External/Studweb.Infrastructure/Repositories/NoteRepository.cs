@@ -1,7 +1,8 @@
 ﻿using Dapper;
 using Studweb.Application.Persistance;
-using Studweb.Domain.Aggregates.Note;
+using Studweb.Domain.Aggregates.Notes;
 using Studweb.Infrastructure.Persistance;
+using Studweb.Infrastructure.Utils.TempClasses;
 
 namespace Studweb.Infrastructure.Repositories;
 
@@ -25,6 +26,20 @@ public sealed class NoteRepository : INoteRepository
     public Task<Note?> GetByTitleAsync(string title, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<Note>> GetAllNotes(int userId, CancellationToken cancellationToken = default)
+    {
+        var connection = _dbContext.Connection;
+
+        const string sql = @"SELECT * FROM Notes WHERE UserId = @UserId";
+
+        var notesTemp = await connection
+            .QueryAsync<NoteTemp>(sql, new { UserId = userId });
+
+        var notes = notesTemp.Select(x => x.Convert());
+
+        return notes;
     }
 
     public async Task<int> CreateAsync(Note note, CancellationToken cancellationToken = default)

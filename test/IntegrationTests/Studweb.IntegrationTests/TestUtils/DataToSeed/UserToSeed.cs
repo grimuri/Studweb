@@ -1,6 +1,6 @@
-using Studweb.Domain.Aggregates.User;
-using Studweb.Domain.Aggregates.User.Entities;
-using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Aggregates.Users;
+using Studweb.Domain.Aggregates.Users.Entities;
+using Studweb.Domain.Aggregates.Users.ValueObjects;
 
 namespace Studweb.IntegrationTests.TestUtils.DataToSeed;
 

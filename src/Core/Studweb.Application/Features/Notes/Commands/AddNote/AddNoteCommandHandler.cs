@@ -1,11 +1,11 @@
 ﻿using ErrorOr;
 using Studweb.Application.Abstractions.Messaging;
-using Studweb.Application.Contracts.Note;
+using Studweb.Application.Contracts.Notes;
 using Studweb.Application.Persistance;
 using Studweb.Application.Utils;
-using Studweb.Domain.Aggregates.Note;
-using Studweb.Domain.Aggregates.Note.ValueObjects;
-using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Aggregates.Notes;
+using Studweb.Domain.Aggregates.Notes.ValueObjects;
+using Studweb.Domain.Aggregates.Users.ValueObjects;
 using Studweb.Domain.Common.Errors;
 
 namespace Studweb.Application.Features.Notes.Commands.AddNote;

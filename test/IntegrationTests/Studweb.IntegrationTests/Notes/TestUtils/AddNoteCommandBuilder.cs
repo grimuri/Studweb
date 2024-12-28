@@ -1,5 +1,5 @@
 ﻿using Studweb.Application.Features.Notes.Commands.AddNote;
-using Studweb.Domain.Aggregates.Note.ValueObjects;
+using Studweb.Domain.Aggregates.Notes.ValueObjects;
 using Studweb.IntegrationTests.TestUtils.Constants;
 
 namespace Studweb.IntegrationTests.Notes.TestUtils;

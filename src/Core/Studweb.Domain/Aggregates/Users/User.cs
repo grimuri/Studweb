@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Studweb.Domain.Aggregates.User.Entities;
-using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Aggregates.Users.Entities;
+using Studweb.Domain.Aggregates.Users.ValueObjects;
 using Studweb.Domain.DomainEvents;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Aggregates.User;
+namespace Studweb.Domain.Aggregates.Users;
 
 public sealed class User : AggregateRoot<UserId>
 {

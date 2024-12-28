@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using Studweb.Domain.Aggregates.User.Enums;
-using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Aggregates.Users.Enums;
+using Studweb.Domain.Aggregates.Users.ValueObjects;
 using Studweb.Domain.Common.Interfaces;
 using Studweb.Domain.Primitives;
 
-namespace Studweb.Domain.Aggregates.User.Entities;
+namespace Studweb.Domain.Aggregates.Users.Entities;
 
-public class VerificationToken : Entity<VerificationTokenId>, IToken
+public class ResetPasswordToken : Entity<ResetPasswordTokenId>, IToken
 {
     public Guid Value { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
@@ -14,22 +14,21 @@ public class VerificationToken : Entity<VerificationTokenId>, IToken
     public TokenType Type { get; private set; }
 
     [JsonConstructor]
-    private VerificationToken(VerificationTokenId id = default) : base(id)
+    private ResetPasswordToken(ResetPasswordTokenId id) : base(id)
     {
         Value = Guid.NewGuid();
         CreatedOnUtc = DateTime.UtcNow;
         ExpiresOnUtc = DateTime.UtcNow.AddDays(1);
-        Type = TokenType.VerificationToken;
+        Type = TokenType.ResetPasswordToken;
     }
 
-    public static VerificationToken Create(VerificationTokenId id = default) => new VerificationToken(id);
-
-    public VerificationToken Load(
-        VerificationTokenId id,
+    public ResetPasswordToken Load(
+        ResetPasswordTokenId id,
         Guid value,
         DateTime createdOnUtc,
         DateTime expiresOnUtc,
-        TokenType tokenType)
+        TokenType tokenType
+    )
     {
         Id = id;
         Value = value;
@@ -39,6 +38,8 @@ public class VerificationToken : Entity<VerificationTokenId>, IToken
         return this;
     }
 
+    public static ResetPasswordToken Create(ResetPasswordTokenId id = default) => new ResetPasswordToken(id);
+    
     public bool Verify()
     {
         if (ExpiresOnUtc.CompareTo(DateTime.UtcNow) == 1)
@@ -48,5 +49,4 @@ public class VerificationToken : Entity<VerificationTokenId>, IToken
 
         return true;
     }
-    
 }
