@@ -3,6 +3,7 @@ using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Contracts.Notes;
 using Studweb.Application.Persistance;
 using Studweb.Application.Utils;
+using Studweb.Domain.Aggregates.Notes;
 using Studweb.Domain.Common.Errors;
 
 namespace Studweb.Application.Features.Notes.Queries.GetAllNotes;
@@ -29,7 +30,7 @@ public class GetAllNotesQueryHandler : IQueryHandler<GetAllNotesQuery, GetAllNot
             return Errors.User.UserNotAuthenticated;
         }
         
-        var notes = await _noteRepository.GetAllNotes(userId.Value);
+        var notes = await _noteRepository.GetAllNotesAsync(userId.Value);
 
         return new GetAllNotesResponse(notes.ToList());
 

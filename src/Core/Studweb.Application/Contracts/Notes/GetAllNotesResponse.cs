@@ -2,4 +2,4 @@
 
 namespace Studweb.Application.Contracts.Notes;
 
-public record GetAllNotesResponse(List<Note> notes);
+public record GetAllNotesResponse(List<Note> Notes);

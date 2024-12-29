@@ -28,7 +28,7 @@ public sealed class NoteRepository : INoteRepository
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<Note>> GetAllNotes(int userId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Note>> GetAllNotesAsync(int userId, CancellationToken cancellationToken = default)
     {
         var connection = _dbContext.Connection;
 
