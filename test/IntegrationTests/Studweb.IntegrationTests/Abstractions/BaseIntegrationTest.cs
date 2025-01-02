@@ -20,7 +20,7 @@ public abstract class BaseIntegrationTest : IDisposable
         DbContext = _scope.ServiceProvider.GetRequiredService<IDbContext>();
         HttpContextAccessor = _scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
         HttpContextAccessor.HttpContext = SetAuthenticatedUser();
-        DataSeeder.Seed(DbContext);
+        //DataSeeder.Seed(DbContext);
     }
 
     protected ISender Sender { get; }

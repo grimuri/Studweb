@@ -38,7 +38,10 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
     public async Task InitializeAsync() 
     {
         await _dbContainer.StartAsync();
-        CreateDb();
+
+        var dbScript = await File.ReadAllTextAsync("./TestUtils/DataToSeed/script.sql");
+        await _dbContainer.ExecScriptAsync(dbScript);
+        //CreateDb();
     }
 
     public new async Task DisposeAsync()
