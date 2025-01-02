@@ -8,6 +8,7 @@ namespace Studweb.Application.UnitTests.TestUtils.Repository;
 public static class NoteRepositoryUtils
 {
     private const int NumberOfNotes = 3;
+    
     public static IEnumerable<Note> GetExampleNotes()
     {
         var notes = new List<Note>();
@@ -30,28 +31,18 @@ public static class NoteRepositoryUtils
         }
 
         return notes;
-        // return new[]
-        // {
-        //     Note.Create(
-        //         NoteId.Create(1),
-        //         "Title1",
-        //         "Content1",
-        //         new()
-        //         {
-        //             Tag.Create("Tag1"),
-        //             Tag.Create("Tag2")
-        //         },
-        //         UserId.Create(1)),
-        //     Note.Create(
-        //         NoteId.Create(2),
-        //         "Title2",
-        //         "Content2",
-        //         new()
-        //         {
-        //             Tag.Create("Tag3"),
-        //             Tag.Create("Tag2")
-        //         },
-        //         UserId.Create(1)),
-        // };
     }
+
+    public static Note GetExampleNote() =>
+        Note.Create(
+            NoteId.Create(1),
+            "Title",
+            "Content",
+            new()
+            {
+                Tag.Create("Tag1"),
+                Tag.Create("Tag2")
+            },
+            UserId.Create(1)
+        );
 }
