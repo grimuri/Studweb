@@ -2,7 +2,6 @@
 using Moq;
 using Studweb.Application.Features.Notes.Queries.GetAllNotes;
 using Studweb.Application.Persistance;
-using Studweb.Application.UnitTests.Features.Notes.Queries.GetAllNotes.TestUtils;
 using Studweb.Application.UnitTests.TestUtils.Repository;
 using Studweb.Application.Utils;
 using Studweb.Domain.Aggregates.Notes;
@@ -31,7 +30,7 @@ public class GetAllNotesQueryHandlerTests
     {
         // Arrange
 
-        var getAllNotesQuery = GetAllNotesQueryUtils.GetAllNotesQuery();
+        var getAllNotesQuery = new GetAllNotesQuery();
 
         _mockUserContext
             .SetupGet(x => x.UserId)
@@ -55,7 +54,7 @@ public class GetAllNotesQueryHandlerTests
     {
         // Arrange
 
-        var getAllNotesQuery = GetAllNotesQueryUtils.GetAllNotesQuery();
+        var getAllNotesQuery = new GetAllNotesQuery();
         var exampleNotes = NoteRepositoryUtils.GetExampleNotes();
 
         _mockUserContext
@@ -87,7 +86,7 @@ public class GetAllNotesQueryHandlerTests
     {
         // Arrange
 
-        var getAllNotesQuery = GetAllNotesQueryUtils.GetAllNotesQuery();
+        var getAllNotesQuery = new GetAllNotesQuery();
 
         _mockUserContext
             .SetupGet(x => x.UserId)
