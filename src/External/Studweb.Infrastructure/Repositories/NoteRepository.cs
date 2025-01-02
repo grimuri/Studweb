@@ -18,9 +18,22 @@ public sealed class NoteRepository : INoteRepository
         _tagRepository = tagRepository;
     }
 
-    public Task<Note?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Note?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var connection = _dbContext.Connection;
+
+        const string sql = @"SELECT Notes.Id, Notes.Title, Notes.Content, Notes.CreatedOnUtc, Notes.LastModifiedOnUtc, 
+                                Notes.UserId AS IdUser, T.Name AS TagName
+                         FROM Notes
+                         LEFT JOIN Notes_Tags NT on Notes.Id = NT.NoteId
+                         LEFT JOIN Tags T on T.Id = NT.TagId
+                         WHERE Notes.Id = @Id";
+
+        var tempNotes = await connection.QueryAsync<NoteWithTagsTemp>(sql, new { Id = id });
+
+        var note = NoteWithTagsTemp.Convert(tempNotes);
+
+        return note;
     }
 
     public Task<Note?> GetByTitleAsync(string title, CancellationToken cancellationToken = default)
@@ -32,7 +45,8 @@ public sealed class NoteRepository : INoteRepository
     {
         var connection = _dbContext.Connection;
 
-        const string sql = @"SELECT * FROM Notes WHERE UserId = @UserId";
+        const string sql = @"SELECT Id, Title, Content, CreatedOnUtc, LastModifiedOnUtc, 
+                                UserId AS IdUser FROM Notes WHERE UserId = @UserId";
 
         var notesTemp = await connection
             .QueryAsync<NoteTemp>(sql, new { UserId = userId });
@@ -77,7 +91,7 @@ public sealed class NoteRepository : INoteRepository
         };
 
         var noteId = await connection.ExecuteScalarAsync<int>(noteSql, parameters);
-        
+
         // Connect note with tags
         const string tagSql = @"INSERT INTO Notes_Tags VALUES (@NoteId, @TagId)";
 

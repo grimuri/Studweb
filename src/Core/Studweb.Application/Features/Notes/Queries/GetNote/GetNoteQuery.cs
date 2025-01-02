@@ -2,6 +2,6 @@
 using Studweb.Application.Contracts.Notes;
 using Studweb.Application.Contracts.Notes.Responses;
 
-namespace Studweb.Application.Features.Notes.Queries.GetAllNotes;
+namespace Studweb.Application.Features.Notes.Queries.GetNote;
 
-public sealed record GetAllNotesQuery() : IQuery<GetAllNotesResponse>;
+public record GetNoteQuery(int Id) : IQuery<GetNoteResponse>;

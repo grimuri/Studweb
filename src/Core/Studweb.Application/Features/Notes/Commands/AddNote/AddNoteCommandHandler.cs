@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Contracts.Notes;
+using Studweb.Application.Contracts.Notes.Responses;
 using Studweb.Application.Persistance;
 using Studweb.Application.Utils;
 using Studweb.Domain.Aggregates.Notes;

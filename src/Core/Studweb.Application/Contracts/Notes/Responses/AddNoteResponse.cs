@@ -1,4 +1,4 @@
-﻿namespace Studweb.Application.Contracts.Notes;
+﻿namespace Studweb.Application.Contracts.Notes.Responses;
 
 public record AddNoteResponse(
     int Id,

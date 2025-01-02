@@ -1,6 +1,8 @@
 ﻿using ErrorOr;
 using Studweb.Application.Abstractions.Messaging;
 using Studweb.Application.Contracts.Notes;
+using Studweb.Application.Contracts.Notes.Dtos;
+using Studweb.Application.Contracts.Notes.Responses;
 using Studweb.Application.Persistance;
 using Studweb.Application.Utils;
 using Studweb.Domain.Aggregates.Notes;
@@ -32,7 +34,15 @@ public class GetAllNotesQueryHandler : IQueryHandler<GetAllNotesQuery, GetAllNot
         
         var notes = await _noteRepository.GetAllNotesAsync(userId.Value);
 
-        return new GetAllNotesResponse(notes.ToList());
+        var notesDto = notes
+            .Select(x => new NoteDto(
+                x.Id.Value,
+                x.Title,
+                x.Content,
+                x.CreatedOnUtc,
+                x.LastModifiedOnUtc));
+        
+        return new GetAllNotesResponse(notesDto.ToList());
 
     }
 }
