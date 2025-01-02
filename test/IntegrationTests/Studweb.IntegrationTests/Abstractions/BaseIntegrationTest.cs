@@ -32,11 +32,11 @@ public abstract class BaseIntegrationTest : IDisposable
         _scope.Dispose();
     }
     
-    private HttpContext SetAuthenticatedUser()
+    protected HttpContext SetAuthenticatedUser(int userId = 1)
     {
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, "1"),
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(ClaimTypes.Email, "email@gmail.com")
         };
 
