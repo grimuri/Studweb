@@ -7,9 +7,9 @@ using Studweb.IntegrationTests.Abstractions;
 namespace Studweb.IntegrationTests.Notes;
 
 [Collection("IntegrationTests")]
-public class GetNote : BaseIntegrationTest
+public class GetNoteTests : BaseIntegrationTest
 {
-    public GetNote(IntegrationTestWebAppFactory factory) : base(factory)
+    public GetNoteTests(IntegrationTestWebAppFactory factory) : base(factory)
     {
     }
     

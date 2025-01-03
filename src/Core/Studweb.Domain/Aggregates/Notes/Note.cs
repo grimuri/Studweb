@@ -80,4 +80,18 @@ public sealed class Note : AggregateRoot<NoteId>
     }
 
     public static Note Empty() => new Note();
+
+    public Note Update(
+        string title,
+        string content,
+        List<Tag> tags
+    )
+    {
+        Title = title;
+        Content = content;
+        Tags = tags;
+        LastModifiedOnUtc = DateTime.UtcNow;
+        
+        return this;
+    }
 }

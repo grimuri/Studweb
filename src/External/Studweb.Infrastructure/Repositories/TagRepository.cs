@@ -56,4 +56,42 @@ public sealed class TagRepository : ITagRepository
 
         return tagId;
     }
+
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var connection = _dbContext.Connection;
+
+        // Check if the tag is used by another note
+        const string tagsInUseSql =
+            @"SELECT T.* FROM Tags T LEFT JOIN Notes_Tags NT on T.Id = NT.TagId WHERE NT.TagId = @Id";
+        
+        var tagInUse = await connection.QueryAsync<TagTemp>(tagsInUseSql, new { Id = id });
+
+        if (tagInUse is null)
+        {
+            return;
+        }
+
+        // If not, delete it
+        const string sql = @"DELETE FROM Tags WHERE Id = @Id";
+
+        await connection.ExecuteScalarAsync(sql, new { Id = id });
+    }
+
+    public async Task DeleteRangeAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default)
+    {
+        var connection = _dbContext.Connection;
+        
+        // Check if the tags are used by another note
+        const string tagsInUseSql =
+            @"SELECT T.* FROM Tags T LEFT JOIN Notes_Tags NT on T.Id = NT.TagId WHERE NT.TagId in @Ids";
+        
+        var tagInUse = await connection.QueryAsync<TagTemp>(tagsInUseSql, new { Ids = ids });
+        
+        // Delete unused tags
+        var tagsToDelete = ids.Where(x => !tagInUse.Any(z => z.Id == x)).ToList();
+        const string sql = @"DELETE FROM Tags WHERE Id in @Ids";
+
+        await connection.ExecuteAsync(sql, new { Ids = tagsToDelete });
+    }
 }

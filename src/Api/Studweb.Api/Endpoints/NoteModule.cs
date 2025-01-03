@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Studweb.Application.Contracts.Notes.Requests;
 using Studweb.Application.Features.Notes.Commands.AddNote;
+using Studweb.Application.Features.Notes.Commands.UpdateNote;
 using Studweb.Application.Features.Notes.Queries.GetAllNotes;
 using Studweb.Application.Features.Notes.Queries.GetNote;
 using static Studweb.Api.Common.HttpResultsExtensions;
@@ -14,7 +16,8 @@ public static class NoteModule
     {
         app.MapPost("/api/note", async (
                 [FromBody] AddNoteCommand command,
-                [FromServices] ISender sender) =>
+                [FromServices] ISender sender
+            ) =>
             {
                 var response = await sender.Send(command);
 
@@ -25,7 +28,8 @@ public static class NoteModule
             .RequireAuthorization();
 
         app.MapGet("/api/note", async (
-                [FromServices] ISender sender) =>
+                [FromServices] ISender sender
+            ) =>
             {
                 var response = await sender.Send(new GetAllNotesQuery());
 
@@ -41,6 +45,26 @@ public static class NoteModule
             ) =>
             {
                 var response = await sender.Send(new GetNoteQuery(id));
+
+                return response.Match(
+                    result => Ok(result),
+                    errors => Problem(errors));
+            })
+            .RequireAuthorization();
+
+        app.MapPut("/api/note/{id}", async (
+                [FromRoute] int id,
+                [FromBody] UpdateNoteRequest updateNoteRequest,
+                [FromServices] ISender sender
+            ) =>
+            {
+                var updateNoteCommand = new UpdateNoteCommand(
+                    id,
+                    updateNoteRequest.Title,
+                    updateNoteRequest.Content,
+                    updateNoteRequest.Tags);
+
+                var response = await sender.Send(updateNoteCommand);
 
                 return response.Match(
                     result => Ok(result),
