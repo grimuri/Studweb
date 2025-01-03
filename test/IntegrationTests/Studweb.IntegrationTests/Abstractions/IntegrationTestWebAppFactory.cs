@@ -1,10 +1,12 @@
 using Dapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Studweb.Infrastructure.Persistance;
-using Studweb.Infrastructure.Utilities;
 using Testcontainers.MsSql;
 
 namespace Studweb.IntegrationTests.Abstractions;
@@ -36,10 +38,13 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
     public async Task InitializeAsync() 
     {
         await _dbContainer.StartAsync();
-        CreateDb();
+
+        var dbScript = await File.ReadAllTextAsync("./TestUtils/DataToSeed/script.sql");
+        await _dbContainer.ExecScriptAsync(dbScript);
+        //CreateDb();
     }
 
-    public new async Task DisposeAsync() 
+    public new async Task DisposeAsync()
     {
         await _dbContainer.StopAsync();
     }

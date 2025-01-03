@@ -1,6 +1,7 @@
 using Studweb.Application.Features.Users.Commands;
 using Studweb.Application.Features.Users.Commands.RegisterUser;
 using Studweb.IntegrationTests.TestUtils;
+using Studweb.IntegrationTests.TestUtils.Constants;
 
 namespace Studweb.IntegrationTests.Users.TestUtils;
 

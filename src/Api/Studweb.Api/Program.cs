@@ -6,6 +6,7 @@ using Studweb.Api.Common;
 using Studweb.Api.Endpoints;
 using Studweb.Api.OptionsSetup;
 using Studweb.Application;
+using Studweb.Domain;
 using Studweb.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +39,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.ConfigureOptions<JwtOptionsSetup>();
     builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
-
+    
     builder.Services
         .AddApplication(builder.Configuration)
         .AddInfrastructure(builder.Configuration)
@@ -88,6 +89,7 @@ var app = builder.Build();
 
     app.AddAuthenticationEndpoints();
     app.AddTestEnpoints();
+    app.AddNoteEndpoints();
 
     app.UseHttpsRedirection();
 

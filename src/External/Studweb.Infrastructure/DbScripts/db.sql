@@ -46,6 +46,31 @@ Create TABLE OutboxMessage (
                        Error varchar(max) NULL,
 );
 
+-- Creating Table Tags
+Create TABLE Tags (
+                        Id integer NOT NULL IDENTITY primary key,
+                        Name varchar(255) NOT NULL unique,
+);
+
+-- Creating Table Notes
+Create TABLE Notes (
+                        Id integer NOT NULL IDENTITY PRIMARY KEY,
+                        Title varchar(255) NOT NULL,
+                        Content varchar(max) NOT NULL,
+                        CreatedOnUtc datetime NOT NULL,
+                        LastModifiedOnUtc datetime NOT NULL,
+                        UserId integer NOT NULL FOREIGN KEY REFERENCES Users(Id),
+)
+
+-- Creating Table Notes_Tags
+Create TABLE Notes_Tags (
+                        NoteId integer NOT NULL,
+                        TagId integer NOT NULL,
+                        PRIMARY KEY (NoteId, TagId),
+                        FOREIGN KEY (NoteId) REFERENCES Notes(Id),
+                        FOREIGN KEY (TagId) REFERENCES Tags(Id),
+)
+
 -- Insert example data to table Roles
 Insert into Roles (Name) values ('Administrator');
 Insert into Roles (Name) values ('User');

@@ -5,7 +5,7 @@ using Studweb.Application.Persistance;
 using Studweb.Application.UnitTests.Features.Users.Commands.RegisterUser.TestUtils;
 using Studweb.Application.UnitTests.TestUtils.Repository;
 using Studweb.Application.Utils;
-using Studweb.Domain.Aggregates.User;
+using Studweb.Domain.Aggregates.Users;
 using Studweb.Domain.Common.Errors;
 
 namespace Studweb.Application.UnitTests.Features.Users.Commands.RegisterUser;

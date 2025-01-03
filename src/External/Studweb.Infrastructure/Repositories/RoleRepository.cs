@@ -1,8 +1,7 @@
 ﻿using Dapper;
 using Studweb.Application.Persistance;
-using Studweb.Domain.Aggregates.User.Entities;
+using Studweb.Domain.Aggregates.Users.Entities;
 using Studweb.Infrastructure.Persistance;
-using Studweb.Infrastructure.Utilities;
 using Studweb.Infrastructure.Utils;
 using Studweb.Infrastructure.Utils.TempClasses;
 

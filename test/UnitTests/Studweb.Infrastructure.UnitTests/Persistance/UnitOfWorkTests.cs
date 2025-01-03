@@ -3,7 +3,6 @@ using FluentAssertions;
 using Moq;
 using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.UnitTests.Persistance.TestUtils;
-using Studweb.Infrastructure.Utilities;
 
 namespace Studweb.Infrastructure.UnitTests.Persistance;
 

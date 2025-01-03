@@ -1,8 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
-using Studweb.Infrastructure.Persistance;
 
-namespace Studweb.Infrastructure.Utilities;
+namespace Studweb.Infrastructure.Persistance;
 
 public class DbContext : IDbContext
 {

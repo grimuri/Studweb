@@ -1,5 +1,6 @@
 using Studweb.Application.Features.Users.Commands.LoginUser;
 using Studweb.IntegrationTests.TestUtils;
+using Studweb.IntegrationTests.TestUtils.Constants;
 
 namespace Studweb.IntegrationTests.Users.TestUtils;
 

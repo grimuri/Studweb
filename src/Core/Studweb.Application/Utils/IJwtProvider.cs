@@ -1,4 +1,4 @@
-using Studweb.Domain.Aggregates.User;
+using Studweb.Domain.Aggregates.Users;
 
 namespace Studweb.Application.Utils;
 

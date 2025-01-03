@@ -1,7 +1,7 @@
-using Studweb.Domain.Aggregates.User;
-using Studweb.Domain.Aggregates.User.Entities;
-using Studweb.Domain.Aggregates.User.Enums;
-using Studweb.Domain.Aggregates.User.ValueObjects;
+using Studweb.Domain.Aggregates.Users;
+using Studweb.Domain.Aggregates.Users.Entities;
+using Studweb.Domain.Aggregates.Users.Enums;
+using Studweb.Domain.Aggregates.Users.ValueObjects;
 
 namespace Studweb.Infrastructure.Utils.TempClasses;
 
@@ -49,7 +49,7 @@ public class UserWithTokensTemp
                 verifiedOnUtc: VerifiedOnUtc,
                 lastModifiedPasswordOnUtc: LastModifiedPasswordOnUtc,
                 banTime: BanTime,
-                role: Role.Create(RoleName, Domain.Aggregates.User.ValueObjects.RoleId.Create(RoleId)),
+                role: Role.Create(RoleName, Domain.Aggregates.Users.ValueObjects.RoleId.Create(RoleId)),
                 verificationToken: LoadVerificationToken(),
                 resetPasswordToken: LoadResetPasswordToken()
             );
@@ -64,7 +64,7 @@ public class UserWithTokensTemp
         var verificationToken = VerificationToken
             .Create()
             .Load(
-                id: Domain.Aggregates.User.ValueObjects.VerificationTokenId.Create((int)VerificationTokenId),
+                id: Domain.Aggregates.Users.ValueObjects.VerificationTokenId.Create((int)VerificationTokenId),
                 value: (Guid)VerificationTokenValue,
                 createdOnUtc: (DateTime)VerificationTokenCreatedOnUtc,
                 expiresOnUtc: (DateTime)VerificationTokenExpiresOnUtc,
@@ -81,7 +81,7 @@ public class UserWithTokensTemp
         var resetPasswordToken = ResetPasswordToken
             .Create()
             .Load(
-                id: Domain.Aggregates.User.ValueObjects.ResetPasswordTokenId.Create((int)ResetPasswordTokenId),
+                id: Domain.Aggregates.Users.ValueObjects.ResetPasswordTokenId.Create((int)ResetPasswordTokenId),
                 value: (Guid)ResetPasswordTokenValue,
                 createdOnUtc: (DateTime)ResetPasswordTokenCreatedOnUtc,
                 expiresOnUtc: (DateTime)ResetPasswordTokenExpiresOnUtc,

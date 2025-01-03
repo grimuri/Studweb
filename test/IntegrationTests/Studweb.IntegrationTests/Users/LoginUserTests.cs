@@ -8,6 +8,7 @@ using static Studweb.IntegrationTests.Users.TestUtils.RegisterUserCommandBuilder
 
 namespace Studweb.IntegrationTests.Users;
 
+[Collection("IntegrationTests")]
 public class LoginUserTests : BaseIntegrationTest
 {
     public LoginUserTests(IntegrationTestWebAppFactory factory) : base(factory)

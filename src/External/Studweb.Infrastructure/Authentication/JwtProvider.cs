@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Studweb.Application.Utils;
-using Studweb.Domain.Aggregates.User;
+using Studweb.Domain.Aggregates.Users;
 
 namespace Studweb.Infrastructure.Authentication;
 
