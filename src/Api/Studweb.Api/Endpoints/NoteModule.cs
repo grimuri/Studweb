@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Studweb.Application.Contracts.Notes.Requests;
 using Studweb.Application.Features.Notes.Commands.AddNote;
+using Studweb.Application.Features.Notes.Commands.DeleteNote;
 using Studweb.Application.Features.Notes.Commands.UpdateNote;
 using Studweb.Application.Features.Notes.Queries.GetAllNotes;
 using Studweb.Application.Features.Notes.Queries.GetNote;
@@ -65,6 +66,21 @@ public static class NoteModule
                     updateNoteRequest.Tags);
 
                 var response = await sender.Send(updateNoteCommand);
+
+                return response.Match(
+                    result => Ok(result),
+                    errors => Problem(errors));
+            })
+            .RequireAuthorization();
+
+        app.MapDelete("/api/note/{id}", async (
+                [FromRoute] int id,
+                [FromServices] ISender sender
+            ) =>
+            {
+                var deleteNoteCommand = new DeleteNoteCommand(id);
+
+                var response = await sender.Send(deleteNoteCommand);
 
                 return response.Match(
                     result => Ok(result),

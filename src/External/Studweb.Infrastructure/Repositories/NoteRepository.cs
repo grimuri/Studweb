@@ -133,6 +133,35 @@ public sealed class NoteRepository : INoteRepository
         return note;
     }
 
+    public async Task<int> DeleteAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var connection = _dbContext.Connection;
+
+        // Get connected tags
+        const string connectedTagsSql =
+            @"SELECT NT.* 
+            FROM Notes_Tags NT LEFT JOIN Notes N on N.Id = NT.NoteId 
+            WHERE NT.NoteId = @NoteId";
+
+        var connectedTags = await connection
+            .QueryAsync<(int NoteId, int TagId)>(connectedTagsSql, new { NoteId = id });
+
+        // Unconnect tags from note
+        const string deleteConnectionSql = @"DELETE FROM Notes_Tags WHERE NoteId = @NoteId";
+
+        await connection.ExecuteAsync(deleteConnectionSql, new { NoteId = id });
+        
+        // Delete note
+        const string deleteNoteSql = @"DELETE FROM Notes WHERE Id = @NoteId";
+
+        var affectedRows = await connection.ExecuteAsync(deleteNoteSql, new { NoteId = id });
+        
+        // Delete connected tags
+        await _tagRepository.DeleteRangeAsync(connectedTags.Select(x => x.TagId));
+
+        return affectedRows;
+    }
+
     private async Task<IEnumerable<TagTemp>> AddTagAsync(List<Tag> listOfTags)
     {
         var tags = new List<TagTemp>();
