@@ -106,6 +106,8 @@ create table Notes
 go
 
 INSERT INTO Notes (Title, Content, CreatedOnUtc, LastModifiedOnUtc, UserId) VALUES (N'string', N'string', N'2024-12-26 10:13:56.720', N'2024-12-26 10:13:56.720', 1);
+INSERT INTO Notes (Title, Content, CreatedOnUtc, LastModifiedOnUtc, UserId) VALUES (N'string', N'string', N'2024-12-26 10:13:56.720', N'2024-12-26 10:13:56.720', 1);
+INSERT INTO Notes (Title, Content, CreatedOnUtc, LastModifiedOnUtc, UserId) VALUES (N'string', N'string', N'2024-12-26 10:13:56.720', N'2024-12-26 10:13:56.720', 1);
 
 
 -- Table Notes_Tags
@@ -123,3 +125,6 @@ go
 INSERT INTO Notes_Tags (NoteId, TagId) VALUES (1, 1);
 INSERT INTO Notes_Tags (NoteId, TagId) VALUES (1, 2);
 INSERT INTO Notes_Tags (NoteId, TagId) VALUES (1, 3);
+INSERT INTO Notes_Tags (NoteId, TagId) VALUES (2, 3);
+INSERT INTO Notes_Tags (NoteId, TagId) VALUES (2, 2);
+INSERT INTO Notes_Tags (NoteId, TagId) VALUES (3, 3);

@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Studweb.Application.Features.Notes.Commands.UpdateNote;
 using Studweb.Domain.Common.Errors;
 using Studweb.IntegrationTests.Abstractions;
 
@@ -86,6 +87,21 @@ public sealed class UpdateNoteTests : BaseIntegrationTest
         
         result.IsError.Should().BeFalse();
         result.Value.Id.Should().NotBe(null);
+    }
+    
+    [Theory]
+    [MemberData(nameof(InvalidUpdateNoteCommandData))]
+    public async Task Handle_Should_ReturnValidationError_WhenCommandIsInvalid(UpdateNoteCommand command)
+    {
+        // Arrange
+        
+        // Act
+
+        var result = await Sender.Send(command);
+        
+        // Assert
+
+        result.IsError.Should().BeTrue();
     }
     
     public static IEnumerable<object[]> InvalidUpdateNoteCommandData()
