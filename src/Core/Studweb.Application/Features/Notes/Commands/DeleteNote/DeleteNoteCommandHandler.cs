@@ -40,7 +40,12 @@ public sealed class DeleteNoteCommandHandler
             return Errors.Note.AccessDenied;
         }
 
-        await _noteRepository.DeleteAsync(request.Id);
+        var deletedNotes = await _noteRepository.DeleteAsync(request.Id);
+
+        if (deletedNotes == 0)
+        {
+            return Errors.Note.CannotDeleteNote;
+        }
 
         return new DeleteNoteResponse(
             request.Id,

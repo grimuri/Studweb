@@ -13,5 +13,9 @@ public static partial class Errors
         public static Error NotFound = Error.NotFound(
             code: "Note.NotFound",
             description: "Note not found");
+
+        public static Error CannotDeleteNote = Error.Unexpected(
+            code: "Note.CannotDeleteNote",
+            description: "System cannot delete note with that id");
     }
 }
