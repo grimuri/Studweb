@@ -36,11 +36,17 @@ jobs:
           Email.Username: ${{ secrets.Email_Username }}
           Email.Password: ${{ secrets.Email_Password }}
 
-      - name: Appsettings
-        run: cat ./src/Api/Studweb.Api/appsettings.json
-
       - name: Build
         run: dotnet build ./Studweb.sln --no-restore --configuration Release
 
+      - name: setting
+        run: cat ${{ secrets.Email_Host }}
+
       - name: Test
         run: dotnet test ./Studweb.sln --configuration Release --no-restore --no-build
+        env:
+          Email__SenderEmail: ${{ secrets.Email_SenderEmail }}
+          Email__Host: ${{ secrets.Email_Host }}
+          Email__Port: ${{ secrets.Email_Port }}
+          Email__Username: ${{ secrets.Email_Username }}
+          Email__Password: ${{ secrets.Email_Password }}
