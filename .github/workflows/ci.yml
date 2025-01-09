@@ -36,9 +36,6 @@ jobs:
           Email.Username: ${{ secrets.Email_Username }}
           Email.Password: ${{ secrets.Email_Password }}
 
-      - name: ENV
-        run: printenv
-
       - name: Build
         run: dotnet build ./Studweb.sln --no-restore --configuration Release
 
