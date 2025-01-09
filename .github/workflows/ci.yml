@@ -23,10 +23,10 @@ jobs:
           dotnet-version: "7.0.x"
 
       - name: Restore
-        run: dotnet restore ./src/Api/Studweb.Api/
+        run: dotnet restore ./Studweb.sln
 
       - name: Build
-        run: dotnet build ./src/Api/Studweb.Api/ --no-restore --configuration Release
+        run: dotnet build ./Studweb.sln --no-restore --configuration Release
 
       - name: Test
-        run: dotnet test ./Studweb.sln
+        run: dotnet test ./Studweb.sln --configuration Release --no-restore --no-build
