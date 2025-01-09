@@ -31,8 +31,8 @@ jobs:
       - name: Test
         run: dotnet test ./Studweb.sln --configuration Release --no-restore --no-build
         env:
-          Email_SenderEmail: ${{ secrets.Email__SenderEmail }}
-          Email_Host: ${{ secrets.Email__Host }}
-          Email_Port: ${{ secrets.Email__Port }}
-          Email_Username: ${{ secrets.Email__Username }}
-          Email_Password: ${{ secrets.Email__Password }}
+          Email.SenderEmail: ${{ secrets.Email__SenderEmail }}
+          Email.Host: ${{ secrets.Email__Host }}
+          Email.Port: ${{ secrets.Email__Port }}
+          Email.Username: ${{ secrets.Email__Username }}
+          Email.Password: ${{ secrets.Email__Password }}
