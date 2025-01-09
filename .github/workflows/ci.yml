@@ -25,6 +25,9 @@ jobs:
       - name: Restore
         run: dotnet restore ./Studweb.sln
 
+      - name: Debug environment variabless
+        run: printenv | grep Email
+
       - name: Substitute appsettings.json entries
         uses: microsoft/variable-substitution@v1
         with:
@@ -36,6 +39,9 @@ jobs:
           Email__Username: ${{ secrets.Email_Username }}
           Email__Password: ${{ secrets.Email_Password }}
           ConnectionStrings__Default: ${{ secrets.ConnectionStrings_Default }}
+
+      - name: Debug environment variables
+        run: printenv | grep Email
 
       - name: Build
         run: dotnet build ./Studweb.sln --no-restore --configuration Release
