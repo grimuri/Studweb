@@ -35,7 +35,7 @@ public static class DependencyInjection
                         configuration["Email:Password"]),
                     EnableSsl = true,
                 });
-
+        throw new Exception(configuration["Email:Host"]);
         return services;
     }
 }
