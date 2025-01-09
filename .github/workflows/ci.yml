@@ -25,14 +25,20 @@ jobs:
       - name: Restore
         run: dotnet restore ./Studweb.sln
 
+      - name: Substitute appsettings.json entries
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: './src/Api/Studweb.Api/appsettings.json'
+        env:
+          Email__SenderEmail: ${{ secrets.Email_SenderEmail }}
+          Email__Host: ${{ secrets.Email_Host }}
+          Email__Port: ${{ secrets.Email_Port }}
+          Email__Username: ${{ secrets.Email_Username }}
+          Email__Password: ${{ secrets.Email_Password }}
+          ConnectionStrings__Default: ${{ secrets.ConnectionStrings_Default }}
+
       - name: Build
         run: dotnet build ./Studweb.sln --no-restore --configuration Release
 
       - name: Test
         run: dotnet test ./Studweb.sln --configuration Release --no-restore --no-build
-        env:
-          Email.SenderEmail: ${{ secrets.Email__SenderEmail }}
-          Email.Host: ${{ secrets.Email__Host }}
-          Email.Port: ${{ secrets.Email__Port }}
-          Email.Username: ${{ secrets.Email__Username }}
-          Email.Password: ${{ secrets.Email__Password }}
