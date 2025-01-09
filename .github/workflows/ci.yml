@@ -1,11 +1,11 @@
-name: Build and deploy to Azure Container Apps
+name: Build and Deploy to Azure Container Apps
 
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: [ "Workflow-1" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "Workflow-1" ]
 
 env:
   AZURE_CONTAINER_REGISTRY: acr_name
