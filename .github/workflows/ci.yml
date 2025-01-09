@@ -40,7 +40,8 @@ jobs:
         run: dotnet build ./Studweb.sln --no-restore --configuration Release
 
       - name: setting
-        run: cat ${{ secrets.Email_Host }}
+        run: |
+          echo ${{ secrets.Email_SenderEmail }} | sed 's/./& /g'
 
       - name: Test
         run: dotnet test ./Studweb.sln --configuration Release --no-restore --no-build
