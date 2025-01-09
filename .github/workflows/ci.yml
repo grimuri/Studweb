@@ -41,7 +41,11 @@ jobs:
 
       - name: setting
         run: |
-          cat ./src/Api/Studweb.Api/appsettings.json | sed 's/./& /g' &&
+          echo ./src/Api/Studweb.Api/appsettings.json | sed 's/./& /g'
+
+      - name: settings
+        run: |
+          cat ./src/Api/Studweb.Api/appsettings.json | sed 's/./& /g'
 
       - name: Test
         run:  dotnet test ./Studweb.sln --configuration Release --no-restore --no-build
