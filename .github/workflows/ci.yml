@@ -36,6 +36,9 @@ jobs:
           Email.Username: ${{ secrets.Email_Username }}
           Email.Password: ${{ secrets.Email_Password }}
 
+      - name: Appsettings
+        run: cat .\src\Api\Studweb.Api\appsettings.json
+
       - name: Build
         run: dotnet build ./Studweb.sln --no-restore --configuration Release
 
