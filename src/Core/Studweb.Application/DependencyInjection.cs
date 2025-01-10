@@ -35,7 +35,7 @@ public static class DependencyInjection
                         configuration["Email:Password"]),
                     EnableSsl = true,
                 });
-
+        
         return services;
     }
 }
