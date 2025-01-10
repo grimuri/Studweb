@@ -1,6 +1,6 @@
 -- Creating Database StudwebDB
 
-CREATE DATABASE StudwebDB;
+--CREATE DATABASE StudwebDB;
 
 --USE StudwebDB;
 
@@ -74,16 +74,3 @@ Create TABLE Notes_Tags (
 -- Insert example data to table Roles
 Insert into Roles (Name) values ('Administrator');
 Insert into Roles (Name) values ('User');
-
-SELECT
-    u.*,
-    vt.Value AS VerificationTokenValue,
-    vt.ExpiresOnUtc,
-    rt.Value AS ResetPasswordTokenValue,
-    rt.ExpiresOnUtc
-FROM
-    Users u
-        LEFT JOIN
-    Tokens vt ON vt.Id = u.VerificationTokenId
-        LEFT JOIN
-    Tokens rt ON rt.Id = u.ResetPasswordTokenId;

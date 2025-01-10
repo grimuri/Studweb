@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
         options.AddPolicy("frontend", policy =>
         {
             policy
-                .WithOrigins("http://localhost:4200")
+                .WithOrigins(builder.Configuration["FrontendUrl"])
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowAnyOrigin();
