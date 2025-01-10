@@ -1,9 +1,9 @@
 version: '3.4'
 
-services: 
-  api:
+services:
+  studweb-api:
     image: ${DOCKER_REGISTRY-}studweb
-    container_name: api
+    container_name: studweb-api
     build:
       context: .
       dockerfile: Api/Studweb.Api/Dockerfile
@@ -14,6 +14,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5000
       - ASPNETCORE_HTTPS_PORTS=5001
+      - ConnectionStrings__Default=Server=mssql,1433;Database=StudwebDB;User=sa;Password=Admin1234!;TrustServerCertificate=True;
     user: root
     depends_on:
       - mssql
@@ -30,12 +31,14 @@ services:
     volumes:
       - msdata:/var/opt/mssql
         
-  studweb.papercut:
-    image: changemakerstudiosus/papercut-smtp:latest
-    container_name: papercut
+  studweb-ui:
+    image: ${DOCKER_REGISTRY-}studwebui
+    container_name: studweb-ui
+    build:
+      context: ../../../../Angular/StudwebUI
+      dockerfile: Dockerfile
     ports:
-      - 8080:80
-      - 25:25
+      - 4200:80 
 
 volumes:
   msdata:
