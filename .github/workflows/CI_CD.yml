@@ -1,4 +1,4 @@
-name: Build and Deploy to Azure Container Apps
+name: Build and deploy to Azure Container Apps
 
 on:
   workflow_dispatch:
@@ -87,14 +87,6 @@ jobs:
           imageToDeploy: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_APP_NAME }}:${{ github.sha }}
           resourceGroup: ${{ env.RESOURCE_GROUP }}
           containerAppName: ${{ env.CONTAINER_APP_NAME }}
-          environmentVariables: |
-            ASPNETCORE_ENVIRONMENT=Development
-            ConnectionStrings__Default: ${{ secrets.CONNECTION_STRING }}
-            Email__SenderEmail: ${{ secrets.EMAIL_SENDEREMAIL }}
-            Email__Host: ${{ secrets.EMAIL_HOST }}
-            Email__Port: ${{ secrets.EMAIL_PORT }}
-            Email__Username: ${{ secrets.EMAIL_USERNAME }}
-            Email__Password: ${{ secrets.EMAIL_PASSWORD }}
         
           
         
