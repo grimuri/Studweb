@@ -1,4 +1,4 @@
-﻿namespace Studweb.Domain.Primitives;
+﻿namespace Studweb.Domain.Common.Primitives;
 
 public abstract class AggregateRoot<TId> : Entity<TId>
 {

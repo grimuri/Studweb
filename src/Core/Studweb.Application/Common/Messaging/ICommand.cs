@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 
-namespace Studweb.Application.Abstractions.Messaging;
+namespace Studweb.Application.Common.Messaging;
 
 public interface ICommand : IRequest<ErrorOr<Unit>>
 {

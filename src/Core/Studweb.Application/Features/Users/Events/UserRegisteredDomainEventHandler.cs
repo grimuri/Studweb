@@ -4,7 +4,6 @@ using FluentEmail.Core;
 using MediatR;
 using Studweb.Application.Persistance;
 using Studweb.Domain.DomainEvents;
-using Studweb.Domain.Primitives;
 
 namespace Studweb.Application.Features.Users.Events;
 
@@ -38,11 +37,5 @@ public sealed class UserRegisteredDomainEventHandler : INotificationHandler<User
             .Body($"To verify your email address pass the code: {verificationToken.Value}")
             .SendAsync();
         
-        // var client = new SmtpClient("smtp.mailtrap.io", 25)
-        // {
-        //     Credentials = new NetworkCredential("ssdsasf23d7c3d", "6898c9erf238"),
-        //     EnableSsl = true
-        // };
-        // client.Send("from@example.com", $@"{notification.User.Email}", "Hello world", "testbody");
     }
 }

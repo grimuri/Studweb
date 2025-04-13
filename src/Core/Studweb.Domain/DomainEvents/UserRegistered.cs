@@ -1,5 +1,5 @@
 ﻿using Studweb.Domain.Aggregates.Users;
-using Studweb.Domain.Primitives;
+using Studweb.Domain.Common.Primitives;
 
 namespace Studweb.Domain.DomainEvents;
 

@@ -1,4 +1,4 @@
-﻿using Studweb.Domain.Primitives;
+﻿using Studweb.Domain.Common.Primitives;
 
 namespace Studweb.Infrastructure.Outbox;
 

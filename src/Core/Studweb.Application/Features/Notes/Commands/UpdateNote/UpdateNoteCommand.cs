@@ -1,4 +1,4 @@
-﻿using Studweb.Application.Abstractions.Messaging;
+﻿using Studweb.Application.Common.Messaging;
 using Studweb.Application.Contracts.Notes.Responses;
 using Studweb.Domain.Aggregates.Notes;
 using Studweb.Domain.Aggregates.Notes.ValueObjects;

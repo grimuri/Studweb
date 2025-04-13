@@ -2,7 +2,7 @@
 using Studweb.Domain.Aggregates.Users.Enums;
 using Studweb.Domain.Aggregates.Users.ValueObjects;
 using Studweb.Domain.Common.Interfaces;
-using Studweb.Domain.Primitives;
+using Studweb.Domain.Common.Primitives;
 
 namespace Studweb.Domain.Aggregates.Users.Entities;
 

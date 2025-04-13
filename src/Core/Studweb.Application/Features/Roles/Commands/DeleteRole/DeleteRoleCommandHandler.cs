@@ -1,5 +1,5 @@
 ﻿using ErrorOr;
-using Studweb.Application.Abstractions.Messaging;
+using Studweb.Application.Common.Messaging;
 using Studweb.Application.Contracts.Role;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Common.Errors;

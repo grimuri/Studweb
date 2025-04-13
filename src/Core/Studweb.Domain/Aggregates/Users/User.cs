@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Aggregates.Users.Entities;
 using Studweb.Domain.Aggregates.Users.ValueObjects;
+using Studweb.Domain.Common.Primitives;
 using Studweb.Domain.DomainEvents;
-using Studweb.Domain.Primitives;
 
 namespace Studweb.Domain.Aggregates.Users;
 
@@ -14,8 +14,6 @@ public sealed class User : AggregateRoot<UserId>
     public string Password { get; set; }
     public DateTime Birthday { get; set; }
     public DateTime CreatedOnUtc { get; private set; }
-    
-    // TODO: Function to verify user
     public DateTime? VerifiedOnUtc { get; private set; } = DateTime.UtcNow;
     
     public DateTime? LastModifiedPasswordOnUtc { get; private set; }

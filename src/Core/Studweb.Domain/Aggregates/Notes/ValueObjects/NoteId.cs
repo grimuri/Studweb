@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Studweb.Domain.Primitives;
+using Studweb.Domain.Common.Primitives;
 
 namespace Studweb.Domain.Aggregates.Notes.ValueObjects;
 

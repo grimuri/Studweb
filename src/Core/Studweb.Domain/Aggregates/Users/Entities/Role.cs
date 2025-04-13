@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Studweb.Domain.Aggregates.Users.ValueObjects;
-using Studweb.Domain.Primitives;
+using Studweb.Domain.Common.Primitives;
 
 namespace Studweb.Domain.Aggregates.Users.Entities;
 

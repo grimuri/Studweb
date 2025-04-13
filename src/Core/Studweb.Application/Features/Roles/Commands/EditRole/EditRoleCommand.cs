@@ -1,4 +1,4 @@
-﻿using Studweb.Application.Abstractions.Messaging;
+﻿using Studweb.Application.Common.Messaging;
 using Studweb.Application.Contracts.Role;
 using Studweb.Domain.Aggregates.Users.Entities;
 

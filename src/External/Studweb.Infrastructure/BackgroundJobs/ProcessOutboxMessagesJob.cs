@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Newtonsoft.Json;
 using Quartz;
-using Studweb.Domain.Primitives;
+using Studweb.Domain.Common.Primitives;
 using Studweb.Infrastructure.Outbox;
 using Studweb.Infrastructure.Utils;
 

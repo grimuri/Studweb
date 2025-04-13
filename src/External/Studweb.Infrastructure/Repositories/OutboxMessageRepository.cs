@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Newtonsoft.Json;
 using Studweb.Application.Persistance;
-using Studweb.Domain.Primitives;
+using Studweb.Domain.Common.Primitives;
 using Studweb.Infrastructure.Outbox;
 using Studweb.Infrastructure.Persistance;
 using Studweb.Infrastructure.Utils;

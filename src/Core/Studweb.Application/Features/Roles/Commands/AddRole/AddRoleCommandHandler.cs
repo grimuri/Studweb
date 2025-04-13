@@ -1,11 +1,11 @@
 ﻿using ErrorOr;
-using Studweb.Application.Abstractions.Messaging;
+using Studweb.Application.Common.Messaging;
 using Studweb.Application.Contracts.Role;
 using Studweb.Application.Persistance;
 using Studweb.Domain.Aggregates.Users.Entities;
 using Studweb.Domain.Common.Errors;
 
-namespace Studweb.Application.Features.Roles.Commands.AddRoleCommand;
+namespace Studweb.Application.Features.Roles.Commands.AddRole;
 
 public class AddRoleCommandHandler : ICommandHandler<AddRoleCommand, AddRoleResponse>
 {

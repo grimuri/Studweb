@@ -1,4 +1,4 @@
-﻿namespace Studweb.Domain.Primitives;
+﻿namespace Studweb.Domain.Common.Primitives;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
     where TId : notnull

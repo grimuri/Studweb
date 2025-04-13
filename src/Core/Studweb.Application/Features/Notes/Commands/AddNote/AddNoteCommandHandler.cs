@@ -1,5 +1,5 @@
 ﻿using ErrorOr;
-using Studweb.Application.Abstractions.Messaging;
+using Studweb.Application.Common.Messaging;
 using Studweb.Application.Contracts.Notes;
 using Studweb.Application.Contracts.Notes.Responses;
 using Studweb.Application.Persistance;

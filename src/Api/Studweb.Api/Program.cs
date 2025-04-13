@@ -11,8 +11,6 @@ using Studweb.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    
-    // Add services to the container.
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("frontend", policy =>
@@ -26,7 +24,6 @@ var builder = WebApplication.CreateBuilder(args);
     });
 
     builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication(x =>
@@ -45,8 +42,6 @@ var builder = WebApplication.CreateBuilder(args);
         .AddApplication(builder.Configuration)
         .AddInfrastructure(builder.Configuration)
         .AddSingleton<ProblemDetailsFactory, StudwebProblemDetailsFactory>();
-
-    //builder.Services.AddAuthorization(builder.Configuration);
 
     builder.Services.AddSwaggerGen(c =>
     {
@@ -81,7 +76,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
